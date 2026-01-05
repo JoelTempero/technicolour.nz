@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Technicolour Thoughts</title>
+    <meta name="description" content="About Technicolour Thoughts - Learn more about the creative vision and the person behind the lens. Video production by Joel Tempero.">
+    <meta name="keywords" content="video production, about, Joel Tempero, creative director, cinematography, New Zealand filmmaker">
+    <meta name="author" content="Joel Tempero">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="About | Technicolour Thoughts">
+    <meta property="og:description" content="Learn more about the creative vision behind Technicolour Thoughts.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://technicolour.nz/about">
+    
+    <link rel="canonical" href="https://technicolour.nz/about">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --funk-pink: #ff2d95;
+            --funk-orange: #ff6b35;
+            --funk-yellow: #ffd23f;
+            --funk-cyan: #00f5d4;
+            --funk-purple: #9b5de5;
+            --funk-blue: #3a86ff;
+            --dark-base: #0a0a0f;
+            --grain-opacity: 0.03;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark-base);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-chaos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-chaos::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 80% 80%, var(--funk-orange) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 20%, var(--funk-purple) 0%, transparent 40%),
+                radial-gradient(ellipse at 60% 40%, var(--funk-cyan) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 60%, var(--funk-pink) 0%, transparent 45%);
+            animation: bgSwirl 25s ease-in-out infinite;
+            opacity: 0.12;
+        }
+
+        @keyframes bgSwirl {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-5deg) scale(1.1); }
+            50% { transform: rotate(3deg) scale(0.95); }
+            75% { transform: rotate(-7deg) scale(1.05); }
+        }
+
+        /* Grain overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: var(--grain-opacity);
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(10,10,15,0.9) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoShift 8s ease-in-out infinite;
+            background-size: 200% 200%;
+            text-decoration: none;
+        }
+
+        @keyframes logoShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--funk-pink), var(--funk-cyan));
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--funk-cyan);
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        /* Main Content */
+        .about-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-title {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--funk-cyan), var(--funk-purple), var(--funk-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShift 10s ease-in-out infinite;
+            background-size: 300% 300%;
+        }
+
+        @keyframes titleShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .about-content {
+            display: grid;
+            gap: 3rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .content-block {
+            position: relative;
+            padding: 2.5rem;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s, border-color 0.4s;
+        }
+
+        .content-block:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.1);
+        }
+
+        .content-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple));
+            border-radius: 20px 20px 0 0;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .content-block:hover::before {
+            opacity: 1;
+        }
+
+        .content-block h2 {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--funk-yellow);
+        }
+
+        .content-block p {
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.85);
+            font-size: 1.1rem;
+        }
+
+        .content-block p + p {
+            margin-top: 1rem;
+        }
+
+        /* Decorative elements */
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .deco-1 {
+            width: 300px;
+            height: 300px;
+            top: 15%;
+            right: -150px;
+            border: 2px solid var(--funk-pink);
+            opacity: 0.1;
+            animation: spin 40s linear infinite;
+        }
+
+        .deco-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            left: -100px;
+            border: 2px solid var(--funk-cyan);
+            opacity: 0.1;
+            animation: spin 30s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Contact CTA */
+        .contact-cta {
+            text-align: center;
+            margin-top: 4rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .contact-cta h3 {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--funk-cyan);
+        }
+
+        .cta-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, rgba(255,45,149,0.2), rgba(0,245,212,0.2));
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .cta-link:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255,45,149,0.4), rgba(0,245,212,0.4));
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 10px 40px rgba(255,45,149,0.2);
+        }
+
+        /* Floating shapes */
+        .floating-shape {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.08;
+        }
+
+        .shape-1 {
+            top: 30%;
+            left: 5%;
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--funk-orange);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: shapeFloat 12s ease-in-out infinite, shapeRotate 25s linear infinite;
+        }
+
+        .shape-2 {
+            top: 50%;
+            right: 5%;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--funk-purple);
+            animation: shapeFloat 15s ease-in-out infinite reverse, shapeRotate 20s linear infinite reverse;
+        }
+
+        .shape-3 {
+            bottom: 25%;
+            left: 15%;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--funk-yellow);
+            border-radius: 50%;
+            animation: shapeFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes shapeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes shapeRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--funk-purple), var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple), transparent);
+            animation: footerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { opacity: 0.5; width: 200px; }
+            50% { opacity: 1; width: 400px; }
+        }
+
+        .footer-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-text a {
+            color: var(--funk-cyan);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .footer-text a:hover {
+            color: var(--funk-pink);
+            text-shadow: 0 0 20px var(--funk-pink);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-toggle {
+                display: flex;
+                z-index: 101;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--dark-base);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+
+            .about-container {
+                padding: 7rem 1.5rem 3rem;
+            }
+
+            .content-block {
+                padding: 1.5rem;
+            }
+
+            .cta-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="bg-chaos"></div>
+    
+    <!-- Floating decorative shapes -->
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    
+    <!-- Large deco circles -->
+    <div class="deco-circle deco-1"></div>
+    <div class="deco-circle deco-2"></div>
+
+    <nav>
+        <a href="index.html" class="logo">Technicolour Thoughts</a>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Portfolio</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://tempero.nz" target="_blank" rel="noopener">Tempero.nz</a></li>
+        </ul>
+    </nav>
+
+    <main class="about-container">
+        <header class="about-header">
+            <h1 class="about-title">About</h1>
+        </header>
+
+        <div class="about-content">
+            <div class="content-block">
+                <h2>The Vision</h2>
+                <p>Technicolour Thoughts is where ideas burst into vivid life. Every frame is a canvas, every edit a brushstroke, painting stories that resonate and move.</p>
+                <p>We believe in the power of visual storytelling to transform, inspire, and connect. From music videos that pulse with energy to documentaries that dig deep into the human experience.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>The Craft</h2>
+                <p>Based in Aotearoa New Zealand, we bring a unique perspective to every project. Blending technical excellence with creative intuition, we craft visuals that don't just capture attention—they hold it.</p>
+                <p>Whether it's a bold music video, a heartfelt documentary, or something entirely new, we approach each project with fresh eyes and an open mind.</p>
+            </div>
+
+            <div class="content-block">
+                <h2>The Person</h2>
+                <p>Produced by Joel Tempero—a creative who sees the world a little differently. With a passion for colour, movement, and emotion, Joel transforms concepts into compelling visual narratives.</p>
+            </div>
+        </div>
+
+        <div class="contact-cta">
+            <h3>Let's Create Something</h3>
+            <div class="cta-links">
+                <a href="mailto:joel@tempero.nz" class="cta-link">
+                    <span>✉</span> joel@tempero.nz
+                </a>
+                <a href="https://tempero.nz" target="_blank" rel="noopener" class="cta-link">
+                    <span>→</span> tempero.nz
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">Powered by <a href="https://tempero.nz" target="_blank" rel="noopener">Tempero.nz</a></p>
+    </footer>
+
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // Parallax effect on content blocks
+        const blocks = document.querySelectorAll('.content-block');
+        
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        blocks.forEach((block, index) => {
+            block.style.opacity = '0';
+            block.style.transform = 'translateY(30px)';
+            block.style.transition = `opacity 0.8s ease ${index * 0.15}s, transform 0.8s ease ${index * 0.15}s`;
+            observer.observe(block);
+        });
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About Technicolour Thoughts",
+        "description": "Learn about the creative vision behind Technicolour Thoughts video production.",
+        "mainEntity": {
+            "@type": "Person",
+            "name": "Joel Tempero",
+            "jobTitle": "Video Producer / Creative Director",
+            "email": "joel@tempero.nz",
+            "url": "https://tempero.nz"
+        }
+    }
+    </script>
+</body>
+</html>
