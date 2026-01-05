@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technicolour Thoughts | Video Production Portfolio</title>
+    <meta name="description" content="Technicolour Thoughts - Creative video production portfolio by Joel Tempero. Music videos, documentaries, and visual storytelling from Aotearoa New Zealand.">
+    <meta name="keywords" content="video production, music videos, New Zealand, Joel Tempero, creative director, cinematography, Technicolour">
+    <meta name="author" content="Joel Tempero">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Technicolour Thoughts">
+    <meta property="og:description" content="Creative video production portfolio - Music videos, documentaries, and visual storytelling.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://technicolour.nz">
+    <meta property="og:image" content="https://img.youtube.com/vi/y8U5uT1ktO8/maxresdefault.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Technicolour Thoughts">
+    <meta name="twitter:description" content="Creative video production portfolio by Joel Tempero">
+    
+    <link rel="canonical" href="https://technicolour.nz">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --funk-pink: #ff2d95;
+            --funk-orange: #ff6b35;
+            --funk-yellow: #ffd23f;
+            --funk-cyan: #00f5d4;
+            --funk-purple: #9b5de5;
+            --funk-blue: #3a86ff;
+            --dark-base: #0a0a0f;
+            --grain-opacity: 0.03;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--dark-base);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-chaos {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-chaos::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 20% 80%, var(--funk-purple) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, var(--funk-cyan) 0%, transparent 40%),
+                radial-gradient(ellipse at 40% 40%, var(--funk-pink) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 60%, var(--funk-orange) 0%, transparent 45%);
+            animation: bgSwirl 20s ease-in-out infinite;
+            opacity: 0.25;
+        }
+
+        .bg-chaos::after {
+            content: '';
+            position: absolute;
+            top: -25%;
+            left: -25%;
+            width: 150%;
+            height: 150%;
+            background: 
+                conic-gradient(from 0deg at 30% 70%, var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple), var(--funk-pink));
+            animation: bgSpin 30s linear infinite;
+            opacity: 0.08;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes bgSwirl {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(-3deg) scale(0.95); }
+            75% { transform: rotate(7deg) scale(1.05); }
+        }
+
+        @keyframes bgSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Grain overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: var(--grain-opacity);
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(10,10,15,0.9) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'Righteous', cursive;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoShift 8s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes logoShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--funk-pink), var(--funk-cyan));
+            transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--funk-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3rem, 12vw, 10rem);
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero-title .word {
+            display: block;
+            animation: titleFloat 6s ease-in-out infinite;
+        }
+
+        .hero-title .word:nth-child(1) {
+            background: linear-gradient(90deg, var(--funk-pink), var(--funk-orange), var(--funk-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation-delay: 0s;
+        }
+
+        .hero-title .word:nth-child(2) {
+            background: linear-gradient(90deg, var(--funk-yellow), var(--funk-cyan), var(--funk-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation-delay: -3s;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0) skewX(0deg); }
+            25% { transform: translateY(-8px) skewX(-1deg); }
+            75% { transform: translateY(5px) skewX(1deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-top: 2rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .scroll-indicator .arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--funk-cyan);
+            border-bottom: 2px solid var(--funk-cyan);
+            transform: rotate(45deg);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* Portfolio Grid */
+        .portfolio {
+            padding: 2rem 2rem 8rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            perspective: 1500px;
+        }
+
+        .video-card {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 16px;
+            overflow: visible;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s;
+            animation: cardFloat var(--float-duration, 6s) ease-in-out infinite;
+            animation-delay: var(--float-delay, 0s);
+        }
+
+        .video-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+            25% { transform: translateY(-8px) rotateX(2deg) rotateY(-2deg); }
+            50% { transform: translateY(-4px) rotateX(-1deg) rotateY(1deg); }
+            75% { transform: translateY(-10px) rotateX(1deg) rotateY(-1deg); }
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(
+                var(--card-angle, 135deg),
+                var(--funk-pink),
+                var(--funk-yellow),
+                var(--funk-cyan),
+                var(--funk-purple),
+                var(--funk-pink)
+            );
+            border-radius: 18px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s;
+            animation: borderRotate 4s linear infinite;
+            background-size: 300% 300%;
+        }
+
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .video-card:hover::before {
+            opacity: 1;
+        }
+
+        .video-card:hover {
+            transform: translateY(-20px) rotateX(10deg) scale(1.05);
+            box-shadow: 
+                0 30px 60px rgba(255,45,149,0.3),
+                0 15px 30px rgba(0,245,212,0.2),
+                0 0 100px rgba(155,93,229,0.2);
+            z-index: 10;
+            animation-play-state: paused;
+        }
+
+        .video-card .glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(255,255,255,0.2) 0%, 
+                transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 2;
+            border-radius: 16px;
+        }
+
+        .video-card:hover .glow {
+            opacity: 1;
+        }
+
+        .video-card .shimmer {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                105deg,
+                transparent 40%,
+                rgba(255,255,255,0.15) 45%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0.15) 55%,
+                transparent 60%
+            );
+            transform: translateX(-100%);
+            transition: none;
+            pointer-events: none;
+            z-index: 3;
+            border-radius: 16px;
+        }
+
+        .video-card:hover .shimmer {
+            animation: shimmerSlide 1.5s ease-in-out;
+        }
+
+        @keyframes shimmerSlide {
+            to { transform: translateX(100%); }
+        }
+
+        .video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s;
+            filter: saturate(1.1) contrast(1.05);
+        }
+
+        .video-card:hover img {
+            transform: scale(1.15);
+            filter: saturate(1.4) contrast(1.15) brightness(1.1);
+        }
+
+        .video-card .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.6) rotateY(0deg);
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(255,45,149,0.6), rgba(0,245,212,0.6));
+            backdrop-filter: blur(15px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 4;
+            border: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 0 40px rgba(255,45,149,0.5);
+        }
+
+        .video-card:hover .play-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1) rotateY(360deg);
+        }
+
+        .play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 28px solid #fff;
+            border-top: 16px solid transparent;
+            border-bottom: 16px solid transparent;
+            margin-left: 8px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+        }
+
+        /* Remove old corner decoration, add new reflection effect */
+        .video-card .reflection {
+            position: absolute;
+            bottom: -60%;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to bottom, 
+                rgba(255,255,255,0.1) 0%,
+                transparent 100%
+            );
+            transform: scaleY(-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+            filter: blur(3px);
+            z-index: -1;
+        }
+
+        .video-card:hover .reflection {
+            opacity: 0.3;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(20px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            width: 90%;
+            max-width: 1200px;
+            aspect-ratio: 16/9;
+            position: relative;
+            animation: lightboxIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes lightboxIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
+        }
+
+        .lightbox iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: transform 0.3s, color 0.3s;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+            color: var(--funk-pink);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--funk-purple), var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple), transparent);
+            animation: footerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { opacity: 0.5; width: 200px; }
+            50% { opacity: 1; width: 400px; }
+        }
+
+        .footer-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+
+        .footer-text a {
+            color: var(--funk-cyan);
+            text-decoration: none;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .footer-text a:hover {
+            color: var(--funk-pink);
+            text-shadow: 0 0 20px var(--funk-pink);
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-toggle {
+                display: flex;
+                z-index: 101;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--dark-base);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-subtitle {
+                letter-spacing: 0.15em;
+            }
+        }
+
+        /* Animated decorative shapes */
+        .floating-shape {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            top: 20%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--funk-pink);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: shapeFloat 15s ease-in-out infinite, shapeRotate 20s linear infinite;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 8%;
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--funk-cyan);
+            animation: shapeFloat 12s ease-in-out infinite reverse, shapeRotate 15s linear infinite reverse;
+        }
+
+        .shape-3 {
+            bottom: 20%;
+            left: 10%;
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--funk-yellow);
+            border-radius: 50%;
+            animation: shapeFloat 18s ease-in-out infinite;
+        }
+
+        @keyframes shapeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes shapeRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="bg-chaos"></div>
+    
+    <!-- Floating decorative shapes -->
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+
+    <nav>
+        <a href="index.html" class="logo">Technicolour Thoughts</a>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="index.html">Portfolio</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://tempero.nz" target="_blank" rel="noopener">Tempero.nz</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1 class="hero-title">
+            <span class="word">Technicolour</span>
+            <span class="word">Thoughts</span>
+        </h1>
+        <p class="hero-subtitle">Visual Stories in Living Colour</p>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="arrow"></div>
+        </div>
+    </header>
+
+    <main class="portfolio" id="portfolio">
+        <div class="video-grid">
+            <article class="video-card" data-video-id="y8U5uT1ktO8" style="--float-delay: 0s; --float-duration: 6s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/y8U5uT1ktO8/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="ePZktG9y50w" style="--float-delay: 0.3s; --float-duration: 7s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/ePZktG9y50w/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="fBuhFUE_bjI" style="--float-delay: 0.6s; --float-duration: 5.5s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/fBuhFUE_bjI/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="7OnzoBmHjs0" style="--float-delay: 0.9s; --float-duration: 6.5s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/7OnzoBmHjs0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="LS6JOx-M6ho" style="--float-delay: 0.2s; --float-duration: 5.8s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/LS6JOx-M6ho/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="IKUMRVsxjIQ" style="--float-delay: 0.5s; --float-duration: 7.2s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/IKUMRVsxjIQ/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="YJltaGOJ3c0" style="--float-delay: 0.8s; --float-duration: 6.2s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/YJltaGOJ3c0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="OOtdVa7SBho" style="--float-delay: 0.1s; --float-duration: 5.6s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/OOtdVa7SBho/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="hYpIq16QDEA" style="--float-delay: 0.4s; --float-duration: 6.8s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/hYpIq16QDEA/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="-KHRiFtIqNs" style="--float-delay: 0.7s; --float-duration: 5.4s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/-KHRiFtIqNs/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="q9Cb0MG0s7k" style="--float-delay: 0.25s; --float-duration: 7.1s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/q9Cb0MG0s7k/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="7yoKTI2Q8D0" style="--float-delay: 0.55s; --float-duration: 6.3s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/7yoKTI2Q8D0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="x9uRYIQ0nIQ" style="--float-delay: 0.85s; --float-duration: 5.9s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/x9uRYIQ0nIQ/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="XLI_AlqjS1Q" style="--float-delay: 0.15s; --float-duration: 6.6s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/XLI_AlqjS1Q/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="K8lBJQwctVE" style="--float-delay: 0.45s; --float-duration: 5.7s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/K8lBJQwctVE/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="RbYVRD8rCWs" style="--float-delay: 0.75s; --float-duration: 7.3s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/RbYVRD8rCWs/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="kQZbWIhQPxE" style="--float-delay: 0.35s; --float-duration: 6.1s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/kQZbWIhQPxE/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="zy6gXw9sXZU" style="--float-delay: 0.65s; --float-duration: 5.5s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/zy6gXw9sXZU/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="T-nWM5n1xqU" style="--float-delay: 0.95s; --float-duration: 6.9s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/T-nWM5n1xqU/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="FwzAs19FxV0" style="--float-delay: 0.2s; --float-duration: 7.4s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/FwzAs19FxV0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="s4LxMVv6Xg4" style="--float-delay: 0.5s; --float-duration: 5.3s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/s4LxMVv6Xg4/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-id="JOSVa1-2ehM" style="--float-delay: 0.8s; --float-duration: 6.4s;">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/JOSVa1-2ehM/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="play-btn"></div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="close-btn" aria-label="Close video">&times;</button>
+            <iframe id="video-frame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <p class="footer-text">Powered by <a href="https://tempero.nz" target="_blank" rel="noopener">Tempero.nz</a></p>
+    </footer>
+
+    <script>
+        // Video lightbox functionality
+        const videoCards = document.querySelectorAll('.video-card');
+        const lightbox = document.getElementById('lightbox');
+        const videoFrame = document.getElementById('video-frame');
+        const closeBtn = document.querySelector('.close-btn');
+
+        videoCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const videoId = card.dataset.videoId;
+                videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            videoFrame.src = '';
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Mobile nav toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+
+        // 3D Tilt effect on mouse move
+        videoCards.forEach(card => {
+            const inner = card.querySelector('.video-card-inner');
+            const glow = card.querySelector('.glow');
+            
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 8;
+                const rotateY = (centerX - x) / 8;
+                
+                card.style.transform = `translateY(-20px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                
+                // Update glow position
+                const percentX = (x / rect.width) * 100;
+                const percentY = (y / rect.height) * 100;
+                glow.style.setProperty('--mouse-x', `${percentX}%`);
+                glow.style.setProperty('--mouse-y', `${percentY}%`);
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Scroll reveal with stagger
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) rotateX(0)';
+                }
+            });
+        }, observerOptions);
+
+        videoCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(60px) rotateX(-15deg)';
+            card.style.transition = `opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) ${index * 0.08}s`;
+            observer.observe(card);
+        });
+    </script>
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "name": "Technicolour Thoughts",
+        "description": "Creative video production portfolio featuring music videos, documentaries, and visual storytelling.",
+        "creator": {
+            "@type": "Person",
+            "name": "Joel Tempero",
+            "email": "joel@tempero.nz",
+            "url": "https://tempero.nz"
+        },
+        "url": "https://technicolour.nz"
+    }
+    </script>
+</body>
+</html>
