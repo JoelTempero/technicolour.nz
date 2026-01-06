@@ -283,69 +283,51 @@
             50% { transform: rotate(45deg) translateY(5px); }
         }
 
-        /* Portfolio Grid - CHAOTIC MASONRY */
+        /* Portfolio Grid - TRUE CHAOS SCATTERED LAYOUT */
         .portfolio {
             padding: 2rem 2rem 8rem;
-            max-width: 2000px;
+            max-width: 100%;
             margin: 0 auto;
             position: relative;
         }
 
         .video-grid {
-            display: block;
-            column-count: 4;
-            column-gap: 1.5rem;
-            perspective: 2000px;
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
         }
 
-        @media (max-width: 1400px) { .video-grid { column-count: 3; } }
-        @media (max-width: 1000px) { .video-grid { column-count: 2; } }
-        @media (max-width: 600px) { .video-grid { column-count: 1; } }
-
         .video-card {
-            position: relative;
+            position: absolute;
             border-radius: 16px;
             overflow: visible;
             cursor: pointer;
             transform-style: preserve-3d;
-            break-inside: avoid;
-            margin-bottom: 1.5rem;
-            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            opacity: 0;
-            transform: translateY(100px) rotateX(-20deg) rotateY(var(--random-rotate, 0deg)) scale(0.8);
+            transition: 
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.5s ease,
+                z-index 0s;
+            will-change: transform;
         }
 
-        .video-card.visible {
-            opacity: 1;
-            transform: translateY(0) rotateX(0) rotateY(0) scale(1);
-            animation: cardFloat var(--float-duration, 6s) ease-in-out infinite;
+        .video-card.revealed {
+            animation: gentleFloat var(--float-duration, 6s) ease-in-out infinite;
             animation-delay: var(--float-delay, 0s);
         }
 
-        /* Tier sizing via padding-bottom for aspect ratio in masonry */
-        .video-card[data-tier="1"] .video-card-inner { padding-bottom: 56.25%; } /* 16:9 */
-        .video-card[data-tier="2"] .video-card-inner { padding-bottom: 60%; }
-        .video-card[data-tier="3"] .video-card-inner { padding-bottom: 65%; }
-        .video-card[data-tier="4"] .video-card-inner { padding-bottom: 70%; }
-
-        /* Scale multipliers for visual hierarchy */
-        .video-card[data-tier="1"] { transform-origin: center center; }
-        .video-card[data-tier="1"].visible { animation: cardFloatHero 8s ease-in-out infinite; }
-
-        @keyframes cardFloatHero {
-            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0) scale(1); }
-            25% { transform: translateY(-15px) rotateX(3deg) rotateY(-3deg) scale(1.02); }
-            50% { transform: translateY(-8px) rotateX(-2deg) rotateY(2deg) scale(1.01); }
-            75% { transform: translateY(-12px) rotateX(2deg) rotateY(-2deg) scale(1.02); }
-        }
+        /* Tier sizing */
+        .video-card[data-tier="1"] { width: 400px; }
+        .video-card[data-tier="2"] { width: 320px; }
+        .video-card[data-tier="3"] { width: 260px; }
+        .video-card[data-tier="4"] { width: 200px; }
 
         .video-card-inner {
             position: relative;
             width: 100%;
-            height: 0;
+            padding-bottom: 56.25%; /* 16:9 */
             border-radius: 16px;
             overflow: hidden;
-            transform-style: preserve-3d;
+            background: #111;
         }
 
         .video-card-inner img {
@@ -355,42 +337,36 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
         }
 
-        @keyframes cardFloat {
-            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
-            25% { transform: translateY(-8px) rotateX(2deg) rotateY(-2deg); }
-            50% { transform: translateY(-4px) rotateX(-1deg) rotateY(1deg); }
-            75% { transform: translateY(-10px) rotateX(1deg) rotateY(-1deg); }
+        .video-card:hover img {
+            transform: scale(1.1);
+            filter: saturate(1.3) brightness(1.1);
         }
 
+        @keyframes gentleFloat {
+            0%, 100% { transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg)); }
+            50% { transform: translate(var(--tx, 0), calc(var(--ty, 0px) - 15px)) rotate(var(--rot, 0deg)); }
+        }
+
+        /* Rainbow border on hover */
         .video-card::before {
             content: '';
             position: absolute;
             inset: -4px;
-            background: linear-gradient(
-                var(--border-angle, 0deg),
-                var(--funk-pink),
-                var(--funk-yellow),
-                var(--funk-cyan),
-                var(--funk-purple),
-                var(--funk-pink)
-            );
+            background: linear-gradient(45deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple), var(--funk-pink));
+            background-size: 400% 400%;
             border-radius: 20px;
             opacity: 0;
             z-index: -1;
-            transition: opacity 0.4s;
-            animation: borderSpin 3s linear infinite;
+            transition: opacity 0.4s ease;
+            animation: gradientShift 3s ease infinite;
         }
 
-        @keyframes borderSpin {
-            to { --border-angle: 360deg; }
-        }
-
-        @property --border-angle {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .video-card:hover::before {
@@ -398,13 +374,20 @@
         }
 
         .video-card:hover {
-            z-index: 100;
-            transform: scale(1.25) rotateX(5deg) translateY(-20px) !important;
+            z-index: 1000 !important;
+            transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.2) rotate(0deg) !important;
             box-shadow: 
-                0 50px 100px rgba(255,45,149,0.4),
-                0 30px 60px rgba(0,245,212,0.3),
-                0 0 150px rgba(155,93,229,0.3);
-            animation-play-state: paused !important;
+                0 30px 60px rgba(255,45,149,0.4),
+                0 15px 30px rgba(0,245,212,0.3),
+                0 0 80px rgba(155,93,229,0.2);
+            animation-play-state: paused;
+        }
+
+        /* Neighbors shrink when one is hovered */
+        .video-grid.has-hover .video-card:not(:hover) {
+            transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.92) rotate(var(--rot, 0deg));
+            opacity: 0.7;
+            filter: blur(1px);
         }
 
         .video-card .glow {
@@ -412,7 +395,7 @@
             inset: 0;
             background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
                 rgba(255,255,255,0.3) 0%, 
-                transparent 50%);
+                transparent 60%);
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
@@ -442,7 +425,7 @@
         }
 
         .video-card:hover .shimmer {
-            animation: shimmerSlide 1s ease-in-out;
+            animation: shimmerSlide 0.8s ease-out;
         }
 
         @keyframes shimmerSlide {
@@ -455,10 +438,10 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 4rem 1.5rem 1.5rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 40%, transparent 100%);
+            padding: 3rem 1.2rem 1.2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
             transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 5;
             border-radius: 0 0 16px 16px;
         }
@@ -469,8 +452,8 @@
 
         .video-meta h3 {
             font-family: 'Righteous', cursive;
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
             background: linear-gradient(90deg, var(--funk-cyan), var(--funk-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -479,14 +462,57 @@
         }
 
         .video-meta .client {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: rgba(255,255,255,0.7);
             font-weight: 300;
-            letter-spacing: 0.05em;
         }
 
-        .video-card[data-tier="1"] .video-meta h3 { font-size: 1.5rem; }
-        .video-card[data-tier="2"] .video-meta h3 { font-size: 1.3rem; }
+        .video-card[data-tier="1"] .video-meta h3 { font-size: 1.3rem; }
+        .video-card[data-tier="2"] .video-meta h3 { font-size: 1.15rem; }
+
+        /* Initial hidden state for reveal */
+        .video-card {
+            opacity: 0;
+            transform: translate(var(--tx, 0), calc(var(--ty, 0px) + 50px)) scale(0.9);
+        }
+
+        .video-card.revealed {
+            opacity: 1;
+            transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg));
+        }
+
+        /* Mobile: simple stack */
+        @media (max-width: 768px) {
+            .video-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                min-height: auto;
+            }
+            
+            .video-card {
+                position: relative !important;
+                width: 100% !important;
+                left: 0 !important;
+                top: auto !important;
+                transform: none !important;
+                opacity: 1;
+            }
+            
+            .video-card.revealed {
+                animation: none;
+            }
+            
+            .video-grid.has-hover .video-card:not(:hover) {
+                transform: none;
+                opacity: 1;
+                filter: none;
+            }
+            
+            .video-card:hover {
+                transform: scale(1.02) !important;
+            }
+        }
 
         .video-card img {
             width: 100%;
@@ -715,14 +741,6 @@
 
             .nav-links a {
                 font-size: 1.5rem;
-            }
-
-            .video-grid {
-                column-count: 1;
-            }
-
-            .video-card:hover {
-                transform: scale(1.05) translateY(-10px) !important;
             }
 
             .hero-subtitle {
@@ -1095,6 +1113,7 @@
     <script>
         // Video lightbox functionality
         const videoCards = document.querySelectorAll('.video-card');
+        const videoGrid = document.querySelector('.video-grid');
         const lightbox = document.getElementById('lightbox');
         const videoFrame = document.getElementById('video-frame');
         const closeBtn = document.querySelector('.close-btn');
@@ -1118,7 +1137,6 @@
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeLightbox();
         });
@@ -1126,86 +1144,133 @@
         // Mobile nav toggle
         const navToggle = document.querySelector('.nav-toggle');
         const navLinks = document.querySelector('.nav-links');
-
         navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            navToggle.classList.toggle('active');
         });
-
-        // Close mobile nav when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                navToggle.classList.remove('active');
-            });
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
 
-        // 3D Tilt effect on mouse move
+        // Hover state for grid (makes others shrink)
         videoCards.forEach(card => {
-            const glow = card.querySelector('.glow');
+            card.addEventListener('mouseenter', () => videoGrid.classList.add('has-hover'));
+            card.addEventListener('mouseleave', () => videoGrid.classList.remove('has-hover'));
             
+            // Glow follow mouse
+            const glow = card.querySelector('.glow');
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Update glow position
-                const percentX = (x / rect.width) * 100;
-                const percentY = (y / rect.height) * 100;
-                glow.style.setProperty('--mouse-x', `${percentX}%`);
-                glow.style.setProperty('--mouse-y', `${percentY}%`);
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                glow.style.setProperty('--mouse-x', x + '%');
+                glow.style.setProperty('--mouse-y', y + '%');
             });
         });
 
-        // CRAZY Scroll reveal with random entrance animations
-        const revealAnimations = [
-            { transform: 'translateY(150px) rotateX(-30deg) rotateZ(-10deg) scale(0.5)', origin: 'bottom center' },
-            { transform: 'translateY(150px) rotateX(-30deg) rotateZ(10deg) scale(0.5)', origin: 'bottom center' },
-            { transform: 'translateX(-200px) rotateY(45deg) scale(0.6)', origin: 'left center' },
-            { transform: 'translateX(200px) rotateY(-45deg) scale(0.6)', origin: 'right center' },
-            { transform: 'translateY(200px) rotateZ(15deg) scale(0.4)', origin: 'center center' },
-            { transform: 'translateY(200px) rotateZ(-15deg) scale(0.4)', origin: 'center center' },
-            { transform: 'scale(0.1) rotateZ(180deg)', origin: 'center center' },
-            { transform: 'translateY(100px) rotateX(-45deg) scale(0.7)', origin: 'bottom center' },
-        ];
+        // SCATTERED LAYOUT ALGORITHM
+        function layoutCards() {
+            if (window.innerWidth <= 768) return; // Skip on mobile
+            
+            const grid = document.querySelector('.video-grid');
+            const cards = Array.from(document.querySelectorAll('.video-card'));
+            const containerWidth = grid.offsetWidth;
+            const padding = 30;
+            
+            // Get card dimensions based on tier
+            const tierWidths = { '1': 400, '2': 320, '3': 260, '4': 200 };
+            
+            // Place cards with collision detection
+            const placed = [];
+            let currentY = 0;
+            let rowHeight = 0;
+            let rowCards = [];
+            
+            // Sort by tier for visual hierarchy (bigger ones first in each "row")
+            const shuffled = [...cards].sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach((card, index) => {
+                const tier = card.dataset.tier;
+                const width = tierWidths[tier];
+                const height = width * 0.5625; // 16:9
+                
+                // Try to find a spot
+                let bestX = padding;
+                let bestY = currentY;
+                let foundSpot = false;
+                
+                // Check if fits in current row
+                const rowWidth = rowCards.reduce((sum, c) => sum + tierWidths[c.dataset.tier] + padding, 0);
+                
+                if (rowWidth + width + padding < containerWidth - padding) {
+                    // Fits in row
+                    bestX = rowWidth + padding;
+                    bestY = currentY + (Math.random() - 0.5) * 40; // Vertical jitter
+                    rowCards.push(card);
+                    rowHeight = Math.max(rowHeight, height);
+                } else {
+                    // New row
+                    currentY += rowHeight + padding + Math.random() * 30;
+                    bestX = padding + Math.random() * 50;
+                    bestY = currentY + (Math.random() - 0.5) * 30;
+                    rowCards = [card];
+                    rowHeight = height;
+                }
+                
+                // Add slight rotation for organic feel
+                const rotation = (Math.random() - 0.5) * 4;
+                
+                // Store position as CSS custom properties
+                card.style.setProperty('--tx', bestX + 'px');
+                card.style.setProperty('--ty', bestY + 'px');
+                card.style.setProperty('--rot', rotation + 'deg');
+                card.style.left = '0';
+                card.style.top = '0';
+                card.style.zIndex = 10 - parseInt(tier);
+                
+                // Random float animation params
+                card.style.setProperty('--float-duration', (5 + Math.random() * 4) + 's');
+                card.style.setProperty('--float-delay', (Math.random() * -5) + 's');
+                
+                placed.push({ x: bestX, y: bestY, width, height });
+            });
+            
+            // Set grid height
+            const maxY = Math.max(...placed.map(p => p.y + p.height));
+            grid.style.height = (maxY + 100) + 'px';
+        }
 
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const card = entry.target;
-                    const delay = parseFloat(card.style.getPropertyValue('--reveal-delay') || 0);
-                    
+        // Smooth reveal on scroll
+        function revealCards() {
+            const cards = document.querySelectorAll('.video-card:not(.revealed)');
+            
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight * 0.9) {
+                    // Stagger the reveal
                     setTimeout(() => {
-                        card.classList.add('visible');
-                    }, delay * 1000);
+                        card.classList.add('revealed');
+                    }, index * 80);
                 }
             });
-        }, observerOptions);
+        }
 
-        // Assign random animations and staggered delays
-        videoCards.forEach((card, index) => {
-            const anim = revealAnimations[Math.floor(Math.random() * revealAnimations.length)];
-            card.style.transform = anim.transform;
-            card.style.transformOrigin = anim.origin;
+        // Initialize
+        function init() {
+            layoutCards();
             
-            // Stagger based on position with some randomness
-            const baseDelay = index * 0.08;
-            const randomOffset = Math.random() * 0.15;
-            card.style.setProperty('--reveal-delay', baseDelay + randomOffset);
-            
-            observer.observe(card);
-        });
+            // Initial reveal for visible cards
+            setTimeout(revealCards, 100);
+        }
 
-        // Add some random rotation to floating animation
-        videoCards.forEach(card => {
-            const randomRotate = (Math.random() - 0.5) * 6;
-            card.style.setProperty('--random-rotate', `${randomRotate}deg`);
+        // Run on load
+        window.addEventListener('load', init);
+        window.addEventListener('resize', () => {
+            layoutCards();
+            document.querySelectorAll('.video-card').forEach(c => c.classList.add('revealed'));
         });
+        window.addEventListener('scroll', revealCards, { passive: true });
     </script>
 
     <!-- Structured Data for SEO -->
