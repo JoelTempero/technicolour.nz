@@ -248,60 +248,91 @@
 
         .scroll-indicator {
             position: absolute;
-            bottom: 3rem;
+            bottom: 5rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
-            animation: bounce 2s ease-in-out infinite;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .scroll-indicator span {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            opacity: 0.5;
+        .scroll-indicator:hover {
+            background: rgba(255,45,149,0.2);
+            border-color: var(--funk-pink);
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 0 30px rgba(255,45,149,0.3);
         }
 
         .scroll-indicator .arrow {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-right: 2px solid var(--funk-cyan);
             border-bottom: 2px solid var(--funk-cyan);
             transform: rotate(45deg);
+            animation: bounce 2s ease-in-out infinite;
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
+            0%, 100% { transform: rotate(45deg) translateY(0); }
+            50% { transform: rotate(45deg) translateY(5px); }
         }
 
-        /* Portfolio Grid */
+        /* Portfolio Grid - Masonry Chaos */
         .portfolio {
             padding: 2rem 2rem 8rem;
-            max-width: 1800px;
+            max-width: 2000px;
             margin: 0 auto;
         }
 
         .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-            perspective: 1500px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: flex-start;
+            perspective: 2000px;
         }
 
         .video-card {
             position: relative;
-            aspect-ratio: 16/9;
             border-radius: 16px;
             overflow: visible;
             cursor: pointer;
             transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             animation: cardFloat var(--float-duration, 6s) ease-in-out infinite;
             animation-delay: var(--float-delay, 0s);
+            flex-shrink: 0;
+        }
+
+        /* Tier 1 - HERO size */
+        .video-card[data-tier="1"] {
+            width: 550px;
+            height: 310px;
+        }
+
+        /* Tier 2 - Large */
+        .video-card[data-tier="2"] {
+            width: 420px;
+            height: 236px;
+        }
+
+        /* Tier 3 - Medium */
+        .video-card[data-tier="3"] {
+            width: 320px;
+            height: 180px;
+        }
+
+        /* Tier 4 - Standard */
+        .video-card[data-tier="4"] {
+            width: 260px;
+            height: 146px;
         }
 
         .video-card-inner {
@@ -351,12 +382,12 @@
         }
 
         .video-card:hover {
-            transform: translateY(-20px) rotateX(10deg) scale(1.05);
+            transform: translateY(-25px) scale(1.15) rotateX(5deg);
             box-shadow: 
-                0 30px 60px rgba(255,45,149,0.3),
-                0 15px 30px rgba(0,245,212,0.2),
-                0 0 100px rgba(155,93,229,0.2);
-            z-index: 10;
+                0 40px 80px rgba(255,45,149,0.4),
+                0 20px 40px rgba(0,245,212,0.3),
+                0 0 120px rgba(155,93,229,0.25);
+            z-index: 100;
             animation-play-state: paused;
         }
 
@@ -364,7 +395,7 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(255,255,255,0.2) 0%, 
+                rgba(255,255,255,0.25) 0%, 
                 transparent 50%);
             opacity: 0;
             transition: opacity 0.3s;
@@ -402,6 +433,48 @@
         @keyframes shimmerSlide {
             to { transform: translateX(100%); }
         }
+
+        /* Video metadata overlay */
+        .video-meta {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem 1.5rem 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 5;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .video-card:hover .video-meta {
+            transform: translateY(0);
+        }
+
+        .video-meta h3 {
+            font-family: 'Righteous', cursive;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            background: linear-gradient(90deg, var(--funk-cyan), var(--funk-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .video-meta .client {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .video-card[data-tier="1"] .video-meta h3 { font-size: 1.4rem; }
+        .video-card[data-tier="2"] .video-meta h3 { font-size: 1.2rem; }
+        .video-card[data-tier="3"] .video-meta h3 { font-size: 1rem; }
+        .video-card[data-tier="4"] .video-meta h3 { font-size: 0.9rem; }
+        .video-card[data-tier="4"] .video-meta { padding: 2rem 1rem 1rem; }
 
         .video-card img {
             width: 100%;
@@ -633,8 +706,16 @@
             }
 
             .video-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1.5rem;
+            }
+
+            .video-card[data-tier="1"],
+            .video-card[data-tier="2"],
+            .video-card[data-tier="3"],
+            .video-card[data-tier="4"] {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16/9;
             }
 
             .hero-subtitle {
@@ -709,7 +790,6 @@
         <ul class="nav-links">
             <li><a href="index.html">Portfolio</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="https://tempero.nz" target="_blank" rel="noopener">Tempero.nz</a></li>
         </ul>
     </nav>
 
@@ -719,188 +799,275 @@
             <span class="word">Thoughts</span>
         </h1>
         <p class="hero-subtitle">Visual Stories in Living Colour</p>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
+        <button class="scroll-indicator" aria-label="Scroll to portfolio" onclick="document.getElementById('portfolio').scrollIntoView({behavior: 'smooth'})">
             <div class="arrow"></div>
-        </div>
+        </button>
     </header>
 
     <main class="portfolio" id="portfolio">
         <div class="video-grid">
-            <article class="video-card" data-video-id="y8U5uT1ktO8" style="--float-delay: 0s; --float-duration: 6s;">
+            <article class="video-card" data-video-id="y8U5uT1ktO8" data-tier="1" style="--float-delay: 0s; --float-duration: 6s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/y8U5uT1ktO8/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Dreamscape</h3>
+                        <span class="client">Made for Aurora Creative</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="ePZktG9y50w" style="--float-delay: 0.3s; --float-duration: 7s;">
+            <article class="video-card" data-video-id="ePZktG9y50w" data-tier="3" style="--float-delay: 0.3s; --float-duration: 7s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/ePZktG9y50w/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Neon Nights</h3>
+                        <span class="client">Made for Velvet Sound</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="fBuhFUE_bjI" style="--float-delay: 0.6s; --float-duration: 5.5s;">
+            <article class="video-card" data-video-id="fBuhFUE_bjI" data-tier="2" style="--float-delay: 0.6s; --float-duration: 5.5s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/fBuhFUE_bjI/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Electric Soul</h3>
+                        <span class="client">Made for Midnight Records</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="7OnzoBmHjs0" style="--float-delay: 0.9s; --float-duration: 6.5s;">
+            <article class="video-card" data-video-id="7OnzoBmHjs0" data-tier="4" style="--float-delay: 0.9s; --float-duration: 6.5s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/7OnzoBmHjs0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Pulse</h3>
+                        <span class="client">Made for Echo Collective</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="LS6JOx-M6ho" style="--float-delay: 0.2s; --float-duration: 5.8s;">
+            <article class="video-card" data-video-id="LS6JOx-M6ho" data-tier="2" style="--float-delay: 0.2s; --float-duration: 5.8s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/LS6JOx-M6ho/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Chromatic</h3>
+                        <span class="client">Made for Prism Studios</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="IKUMRVsxjIQ" style="--float-delay: 0.5s; --float-duration: 7.2s;">
+            <article class="video-card" data-video-id="IKUMRVsxjIQ" data-tier="4" style="--float-delay: 0.5s; --float-duration: 7.2s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/IKUMRVsxjIQ/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Wavelength</h3>
+                        <span class="client">Made for Nova Music</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="YJltaGOJ3c0" style="--float-delay: 0.8s; --float-duration: 6.2s;">
+            <article class="video-card" data-video-id="YJltaGOJ3c0" data-tier="1" style="--float-delay: 0.8s; --float-duration: 6.2s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/YJltaGOJ3c0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Kaleidoscope</h3>
+                        <span class="client">Made for Spectrum Arts</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="OOtdVa7SBho" style="--float-delay: 0.1s; --float-duration: 5.6s;">
+            <article class="video-card" data-video-id="OOtdVa7SBho" data-tier="3" style="--float-delay: 0.1s; --float-duration: 5.6s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/OOtdVa7SBho/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Afterglow</h3>
+                        <span class="client">Made for Dusk Agency</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="hYpIq16QDEA" style="--float-delay: 0.4s; --float-duration: 6.8s;">
+            <article class="video-card" data-video-id="hYpIq16QDEA" data-tier="4" style="--float-delay: 0.4s; --float-duration: 6.8s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/hYpIq16QDEA/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Flux</h3>
+                        <span class="client">Made for Kinetic Films</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="-KHRiFtIqNs" style="--float-delay: 0.7s; --float-duration: 5.4s;">
+            <article class="video-card" data-video-id="-KHRiFtIqNs" data-tier="3" style="--float-delay: 0.7s; --float-duration: 5.4s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/-KHRiFtIqNs/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Vapor</h3>
+                        <span class="client">Made for Haze Productions</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="q9Cb0MG0s7k" style="--float-delay: 0.25s; --float-duration: 7.1s;">
+            <article class="video-card" data-video-id="q9Cb0MG0s7k" data-tier="2" style="--float-delay: 0.25s; --float-duration: 7.1s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/q9Cb0MG0s7k/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Mirage</h3>
+                        <span class="client">Made for Desert Rose</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="7yoKTI2Q8D0" style="--float-delay: 0.55s; --float-duration: 6.3s;">
+            <article class="video-card" data-video-id="7yoKTI2Q8D0" data-tier="4" style="--float-delay: 0.55s; --float-duration: 6.3s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/7yoKTI2Q8D0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Synthesis</h3>
+                        <span class="client">Made for Circuit Labs</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="x9uRYIQ0nIQ" style="--float-delay: 0.85s; --float-duration: 5.9s;">
+            <article class="video-card" data-video-id="x9uRYIQ0nIQ" data-tier="3" style="--float-delay: 0.85s; --float-duration: 5.9s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/x9uRYIQ0nIQ/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Radiant</h3>
+                        <span class="client">Made for Lumina Co</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="XLI_AlqjS1Q" style="--float-delay: 0.15s; --float-duration: 6.6s;">
+            <article class="video-card" data-video-id="XLI_AlqjS1Q" data-tier="1" style="--float-delay: 0.15s; --float-duration: 6.6s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/XLI_AlqjS1Q/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Ethereal</h3>
+                        <span class="client">Made for Cloud Nine</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="K8lBJQwctVE" style="--float-delay: 0.45s; --float-duration: 5.7s;">
+            <article class="video-card" data-video-id="K8lBJQwctVE" data-tier="4" style="--float-delay: 0.45s; --float-duration: 5.7s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/K8lBJQwctVE/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Prism</h3>
+                        <span class="client">Made for Refract Studio</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="RbYVRD8rCWs" style="--float-delay: 0.75s; --float-duration: 7.3s;">
+            <article class="video-card" data-video-id="RbYVRD8rCWs" data-tier="2" style="--float-delay: 0.75s; --float-duration: 7.3s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/RbYVRD8rCWs/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Aurora</h3>
+                        <span class="client">Made for Northern Lights</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="kQZbWIhQPxE" style="--float-delay: 0.35s; --float-duration: 6.1s;">
+            <article class="video-card" data-video-id="kQZbWIhQPxE" data-tier="3" style="--float-delay: 0.35s; --float-duration: 6.1s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/kQZbWIhQPxE/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Cascade</h3>
+                        <span class="client">Made for Waterfall Media</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="zy6gXw9sXZU" style="--float-delay: 0.65s; --float-duration: 5.5s;">
+            <article class="video-card" data-video-id="zy6gXw9sXZU" data-tier="4" style="--float-delay: 0.65s; --float-duration: 5.5s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/zy6gXw9sXZU/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Static</h3>
+                        <span class="client">Made for Signal House</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="T-nWM5n1xqU" style="--float-delay: 0.95s; --float-duration: 6.9s;">
+            <article class="video-card" data-video-id="T-nWM5n1xqU" data-tier="2" style="--float-delay: 0.95s; --float-duration: 6.9s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/T-nWM5n1xqU/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Horizon</h3>
+                        <span class="client">Made for Skyline Agency</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="FwzAs19FxV0" style="--float-delay: 0.2s; --float-duration: 7.4s;">
+            <article class="video-card" data-video-id="FwzAs19FxV0" data-tier="4" style="--float-delay: 0.2s; --float-duration: 7.4s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/FwzAs19FxV0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Ember</h3>
+                        <span class="client">Made for Firefly Films</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="s4LxMVv6Xg4" style="--float-delay: 0.5s; --float-duration: 5.3s;">
+            <article class="video-card" data-video-id="s4LxMVv6Xg4" data-tier="3" style="--float-delay: 0.5s; --float-duration: 5.3s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/s4LxMVv6Xg4/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Spectrum</h3>
+                        <span class="client">Made for RGB Collective</span>
+                    </div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="JOSVa1-2ehM" style="--float-delay: 0.8s; --float-duration: 6.4s;">
+            <article class="video-card" data-video-id="JOSVa1-2ehM" data-tier="1" style="--float-delay: 0.8s; --float-duration: 6.4s;">
                 <div class="video-card-inner">
                     <img src="https://img.youtube.com/vi/JOSVa1-2ehM/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="play-btn"></div>
+                    <div class="video-meta">
+                        <h3>Vivid</h3>
+                        <span class="client">Made for Chroma Works</span>
+                    </div>
                 </div>
             </article>
         </div>
