@@ -283,85 +283,102 @@
             50% { transform: rotate(45deg) translateY(5px); }
         }
 
-        /* Portfolio Grid - TRUE CHAOS SCATTERED LAYOUT */
+        /* Portfolio Grid - ORGANIC MASONRY */
         .portfolio {
-            padding: 2rem 2rem 8rem;
-            max-width: 100%;
+            padding: 2rem 3rem 8rem;
+            max-width: 1800px;
             margin: 0 auto;
-            position: relative;
         }
 
         .video-grid {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 20px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 1400px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 900px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { 
+            .video-grid { 
+                grid-template-columns: 1fr; 
+                grid-auto-rows: auto;
+            }
+            .video-card {
+                grid-row: span 1 !important;
+            }
         }
 
         .video-card {
-            position: absolute;
+            position: relative;
             border-radius: 16px;
             overflow: visible;
             cursor: pointer;
-            transform-style: preserve-3d;
             transition: 
-                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.5s ease,
-                z-index 0s;
-            will-change: transform;
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                opacity 0.4s ease,
+                filter 0.4s ease;
+            will-change: transform, opacity;
         }
 
+        /* Tier-based row spans for varied heights */
+        .video-card[data-tier="1"] { grid-row: span 14; }
+        .video-card[data-tier="2"] { grid-row: span 12; }
+        .video-card[data-tier="3"] { grid-row: span 10; }
+        .video-card[data-tier="4"] { grid-row: span 8; }
+
+        /* Subtle offsets for organic feel - alternating pattern */
+        .video-card:nth-child(4n+1) { transform: translateY(0px) rotate(-0.5deg); }
+        .video-card:nth-child(4n+2) { transform: translateY(15px) rotate(0.5deg); }
+        .video-card:nth-child(4n+3) { transform: translateY(-10px) rotate(-0.3deg); }
+        .video-card:nth-child(4n+4) { transform: translateY(25px) rotate(0.4deg); }
+
+        /* Gentle floating animation */
         .video-card.revealed {
-            animation: gentleFloat var(--float-duration, 6s) ease-in-out infinite;
+            animation: gentleFloat 8s ease-in-out infinite;
             animation-delay: var(--float-delay, 0s);
         }
 
-        /* Tier sizing */
-        .video-card[data-tier="1"] { width: 400px; }
-        .video-card[data-tier="2"] { width: 320px; }
-        .video-card[data-tier="3"] { width: 260px; }
-        .video-card[data-tier="4"] { width: 200px; }
+        @keyframes gentleFloat {
+            0%, 100% { transform: var(--base-transform) translateY(0); }
+            50% { transform: var(--base-transform) translateY(-8px); }
+        }
 
         .video-card-inner {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 */
+            height: 100%;
             border-radius: 16px;
             overflow: hidden;
             background: #111;
         }
 
         .video-card-inner img {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease, filter 0.5s ease;
+            transition: transform 0.4s ease, filter 0.4s ease;
         }
 
         .video-card:hover img {
-            transform: scale(1.1);
-            filter: saturate(1.3) brightness(1.1);
-        }
-
-        @keyframes gentleFloat {
-            0%, 100% { transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg)); }
-            50% { transform: translate(var(--tx, 0), calc(var(--ty, 0px) - 15px)) rotate(var(--rot, 0deg)); }
+            transform: scale(1.08);
+            filter: saturate(1.2) brightness(1.05);
         }
 
         /* Rainbow border on hover */
         .video-card::before {
             content: '';
             position: absolute;
-            inset: -4px;
+            inset: -3px;
             background: linear-gradient(45deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple), var(--funk-pink));
-            background-size: 400% 400%;
-            border-radius: 20px;
+            background-size: 300% 300%;
+            border-radius: 19px;
             opacity: 0;
             z-index: -1;
-            transition: opacity 0.4s ease;
-            animation: gradientShift 3s ease infinite;
+            transition: opacity 0.3s ease;
+            animation: gradientShift 4s ease infinite;
         }
 
         @keyframes gradientShift {
@@ -374,27 +391,27 @@
         }
 
         .video-card:hover {
-            z-index: 1000 !important;
-            transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.2) rotate(0deg) !important;
+            z-index: 100;
+            transform: scale(1.12) rotate(0deg) !important;
             box-shadow: 
-                0 30px 60px rgba(255,45,149,0.4),
-                0 15px 30px rgba(0,245,212,0.3),
-                0 0 80px rgba(155,93,229,0.2);
+                0 25px 50px rgba(255,45,149,0.35),
+                0 10px 25px rgba(0,245,212,0.25),
+                0 0 60px rgba(155,93,229,0.15);
             animation-play-state: paused;
         }
 
-        /* Neighbors shrink when one is hovered */
+        /* Neighbors respond to hover */
         .video-grid.has-hover .video-card:not(:hover) {
-            transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.92) rotate(var(--rot, 0deg));
-            opacity: 0.7;
-            filter: blur(1px);
+            opacity: 0.6;
+            filter: blur(1px) saturate(0.7);
+            transform: scale(0.96) !important;
         }
 
         .video-card .glow {
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(255,255,255,0.3) 0%, 
+                rgba(255,255,255,0.25) 0%, 
                 transparent 60%);
             opacity: 0;
             transition: opacity 0.3s;
@@ -413,9 +430,9 @@
             background: linear-gradient(
                 105deg,
                 transparent 40%,
-                rgba(255,255,255,0.2) 45%,
-                rgba(255,255,255,0.4) 50%,
-                rgba(255,255,255,0.2) 55%,
+                rgba(255,255,255,0.15) 45%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0.15) 55%,
                 transparent 60%
             );
             transform: translateX(-100%);
@@ -425,7 +442,7 @@
         }
 
         .video-card:hover .shimmer {
-            animation: shimmerSlide 0.8s ease-out;
+            animation: shimmerSlide 0.6s ease-out;
         }
 
         @keyframes shimmerSlide {
@@ -438,10 +455,10 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 3rem 1.2rem 1.2rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+            padding: 2.5rem 1rem 1rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
             transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 5;
             border-radius: 0 0 16px 16px;
         }
@@ -452,8 +469,8 @@
 
         .video-meta h3 {
             font-family: 'Righteous', cursive;
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
             background: linear-gradient(90deg, var(--funk-cyan), var(--funk-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -462,53 +479,45 @@
         }
 
         .video-meta .client {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: rgba(255,255,255,0.7);
             font-weight: 300;
         }
 
-        .video-card[data-tier="1"] .video-meta h3 { font-size: 1.3rem; }
-        .video-card[data-tier="2"] .video-meta h3 { font-size: 1.15rem; }
+        .video-card[data-tier="1"] .video-meta h3 { font-size: 1.2rem; }
+        .video-card[data-tier="2"] .video-meta h3 { font-size: 1.1rem; }
 
-        /* Initial hidden state for reveal */
+        /* Reveal animation - start hidden */
         .video-card {
             opacity: 0;
-            transform: translate(var(--tx, 0), calc(var(--ty, 0px) + 50px)) scale(0.9);
+            transform: translateY(40px) scale(0.95);
         }
 
         .video-card.revealed {
             opacity: 1;
-            transform: translate(var(--tx, 0), var(--ty, 0)) rotate(var(--rot, 0deg));
         }
 
-        /* Mobile: simple stack */
-        @media (max-width: 768px) {
-            .video-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-                min-height: auto;
-            }
-            
-            .video-card {
-                position: relative !important;
-                width: 100% !important;
-                left: 0 !important;
-                top: auto !important;
+        /* Re-apply the offset transforms after reveal */
+        .video-card.revealed:nth-child(4n+1) { --base-transform: translateY(0px) rotate(-0.5deg); transform: var(--base-transform); }
+        .video-card.revealed:nth-child(4n+2) { --base-transform: translateY(15px) rotate(0.5deg); transform: var(--base-transform); }
+        .video-card.revealed:nth-child(4n+3) { --base-transform: translateY(-10px) rotate(-0.3deg); transform: var(--base-transform); }
+        .video-card.revealed:nth-child(4n+4) { --base-transform: translateY(25px) rotate(0.4deg); transform: var(--base-transform); }
+
+        @media (max-width: 600px) {
+            .video-card,
+            .video-card.revealed,
+            .video-card.revealed:nth-child(n) {
                 transform: none !important;
-                opacity: 1;
+                --base-transform: none;
             }
-            
             .video-card.revealed {
                 animation: none;
             }
-            
             .video-grid.has-hover .video-card:not(:hover) {
-                transform: none;
                 opacity: 1;
                 filter: none;
+                transform: none !important;
             }
-            
             .video-card:hover {
                 transform: scale(1.02) !important;
             }
@@ -745,6 +754,10 @@
 
             .hero-subtitle {
                 letter-spacing: 0.15em;
+            }
+            
+            .scroll-indicator {
+                bottom: 3rem;
             }
         }
 
@@ -1111,7 +1124,7 @@
     </footer>
 
     <script>
-        // Video lightbox functionality
+        // Video lightbox
         const videoCards = document.querySelectorAll('.video-card');
         const videoGrid = document.querySelector('.video-grid');
         const lightbox = document.getElementById('lightbox');
@@ -1141,22 +1154,20 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // Mobile nav toggle
+        // Mobile nav
         const navToggle = document.querySelector('.nav-toggle');
         const navLinks = document.querySelector('.nav-links');
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
 
-        // Hover state for grid (makes others shrink)
+        // Hover state - others respond
         videoCards.forEach(card => {
             card.addEventListener('mouseenter', () => videoGrid.classList.add('has-hover'));
             card.addEventListener('mouseleave', () => videoGrid.classList.remove('has-hover'));
             
-            // Glow follow mouse
+            // Glow follows mouse
             const glow = card.querySelector('.glow');
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -1167,110 +1178,32 @@
             });
         });
 
-        // SCATTERED LAYOUT ALGORITHM
-        function layoutCards() {
-            if (window.innerWidth <= 768) return; // Skip on mobile
-            
-            const grid = document.querySelector('.video-grid');
-            const cards = Array.from(document.querySelectorAll('.video-card'));
-            const containerWidth = grid.offsetWidth;
-            const padding = 30;
-            
-            // Get card dimensions based on tier
-            const tierWidths = { '1': 400, '2': 320, '3': 260, '4': 200 };
-            
-            // Place cards with collision detection
-            const placed = [];
-            let currentY = 0;
-            let rowHeight = 0;
-            let rowCards = [];
-            
-            // Sort by tier for visual hierarchy (bigger ones first in each "row")
-            const shuffled = [...cards].sort(() => Math.random() - 0.5);
-            
-            shuffled.forEach((card, index) => {
-                const tier = card.dataset.tier;
-                const width = tierWidths[tier];
-                const height = width * 0.5625; // 16:9
-                
-                // Try to find a spot
-                let bestX = padding;
-                let bestY = currentY;
-                let foundSpot = false;
-                
-                // Check if fits in current row
-                const rowWidth = rowCards.reduce((sum, c) => sum + tierWidths[c.dataset.tier] + padding, 0);
-                
-                if (rowWidth + width + padding < containerWidth - padding) {
-                    // Fits in row
-                    bestX = rowWidth + padding;
-                    bestY = currentY + (Math.random() - 0.5) * 40; // Vertical jitter
-                    rowCards.push(card);
-                    rowHeight = Math.max(rowHeight, height);
-                } else {
-                    // New row
-                    currentY += rowHeight + padding + Math.random() * 30;
-                    bestX = padding + Math.random() * 50;
-                    bestY = currentY + (Math.random() - 0.5) * 30;
-                    rowCards = [card];
-                    rowHeight = height;
-                }
-                
-                // Add slight rotation for organic feel
-                const rotation = (Math.random() - 0.5) * 4;
-                
-                // Store position as CSS custom properties
-                card.style.setProperty('--tx', bestX + 'px');
-                card.style.setProperty('--ty', bestY + 'px');
-                card.style.setProperty('--rot', rotation + 'deg');
-                card.style.left = '0';
-                card.style.top = '0';
-                card.style.zIndex = 10 - parseInt(tier);
-                
-                // Random float animation params
-                card.style.setProperty('--float-duration', (5 + Math.random() * 4) + 's');
-                card.style.setProperty('--float-delay', (Math.random() * -5) + 's');
-                
-                placed.push({ x: bestX, y: bestY, width, height });
-            });
-            
-            // Set grid height
-            const maxY = Math.max(...placed.map(p => p.y + p.height));
-            grid.style.height = (maxY + 100) + 'px';
-        }
-
-        // Smooth reveal on scroll
-        function revealCards() {
-            const cards = document.querySelectorAll('.video-card:not(.revealed)');
-            
-            cards.forEach((card, index) => {
-                const rect = card.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                
-                if (rect.top < windowHeight * 0.9) {
-                    // Stagger the reveal
-                    setTimeout(() => {
-                        card.classList.add('revealed');
-                    }, index * 80);
-                }
-            });
-        }
-
-        // Initialize
-        function init() {
-            layoutCards();
-            
-            // Initial reveal for visible cards
-            setTimeout(revealCards, 100);
-        }
-
-        // Run on load
-        window.addEventListener('load', init);
-        window.addEventListener('resize', () => {
-            layoutCards();
-            document.querySelectorAll('.video-card').forEach(c => c.classList.add('revealed'));
+        // Assign random float delays
+        videoCards.forEach((card, i) => {
+            card.style.setProperty('--float-delay', -(Math.random() * 8) + 's');
         });
-        window.addEventListener('scroll', revealCards, { passive: true });
+
+        // Smooth reveal on scroll - using IntersectionObserver
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Small stagger based on position in viewport
+                    const rect = entry.boundingClientRect;
+                    const delay = (rect.left / window.innerWidth) * 150 + (rect.top / window.innerHeight) * 100;
+                    
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, delay);
+                    
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+
+        videoCards.forEach(card => revealObserver.observe(card));
     </script>
 
     <!-- Structured Data for SEO -->
