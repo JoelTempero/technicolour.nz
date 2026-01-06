@@ -283,74 +283,67 @@
             50% { transform: rotate(45deg) translateY(5px); }
         }
 
-        /* Portfolio Grid - ORGANIC MASONRY */
+        /* Portfolio Grid - TIGHT MOSAIC */
         .portfolio {
-            padding: 2rem 3rem 8rem;
-            max-width: 1800px;
+            padding: 2rem 2rem 8rem;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 20px;
-            gap: 20px;
-            align-items: start;
-        }
-
-        @media (max-width: 1400px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 900px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { 
-            .video-grid { 
-                grid-template-columns: 1fr; 
-                grid-auto-rows: auto;
-            }
-            .video-card {
-                grid-row: span 1 !important;
-            }
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 60px;
+            gap: 12px;
         }
 
         .video-card {
             position: relative;
-            border-radius: 16px;
-            overflow: visible;
+            border-radius: 12px;
+            overflow: hidden;
             cursor: pointer;
             transition: 
                 transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.4s ease,
-                opacity 0.4s ease,
-                filter 0.4s ease;
-            will-change: transform, opacity;
+                z-index 0s 0.4s;
         }
 
-        /* Tier-based row spans for varied heights */
-        .video-card[data-tier="1"] { grid-row: span 14; }
-        .video-card[data-tier="2"] { grid-row: span 12; }
-        .video-card[data-tier="3"] { grid-row: span 10; }
-        .video-card[data-tier="4"] { grid-row: span 8; }
-
-        /* Subtle offsets for organic feel - alternating pattern */
-        .video-card:nth-child(4n+1) { transform: translateY(0px) rotate(-0.5deg); }
-        .video-card:nth-child(4n+2) { transform: translateY(15px) rotate(0.5deg); }
-        .video-card:nth-child(4n+3) { transform: translateY(-10px) rotate(-0.3deg); }
-        .video-card:nth-child(4n+4) { transform: translateY(25px) rotate(0.4deg); }
-
-        /* Gentle floating animation */
-        .video-card.revealed {
-            animation: gentleFloat 8s ease-in-out infinite;
-            animation-delay: var(--float-delay, 0s);
+        .video-card:hover {
+            z-index: 100;
+            transition: 
+                transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                z-index 0s 0s;
         }
 
-        @keyframes gentleFloat {
-            0%, 100% { transform: var(--base-transform) translateY(0); }
-            50% { transform: var(--base-transform) translateY(-8px); }
-        }
+        /* Manual grid placement for mosaic - like tetris pieces */
+        .video-card:nth-child(1)  { grid-column: span 4; grid-row: span 4; }
+        .video-card:nth-child(2)  { grid-column: span 2; grid-row: span 3; }
+        .video-card:nth-child(3)  { grid-column: span 3; grid-row: span 2; }
+        .video-card:nth-child(4)  { grid-column: span 3; grid-row: span 4; }
+        .video-card:nth-child(5)  { grid-column: span 2; grid-row: span 2; }
+        .video-card:nth-child(6)  { grid-column: span 2; grid-row: span 3; }
+        .video-card:nth-child(7)  { grid-column: span 3; grid-row: span 3; }
+        .video-card:nth-child(8)  { grid-column: span 2; grid-row: span 2; }
+        .video-card:nth-child(9)  { grid-column: span 4; grid-row: span 3; }
+        .video-card:nth-child(10) { grid-column: span 2; grid-row: span 4; }
+        .video-card:nth-child(11) { grid-column: span 3; grid-row: span 2; }
+        .video-card:nth-child(12) { grid-column: span 2; grid-row: span 2; }
+        .video-card:nth-child(13) { grid-column: span 3; grid-row: span 3; }
+        .video-card:nth-child(14) { grid-column: span 4; grid-row: span 4; }
+        .video-card:nth-child(15) { grid-column: span 2; grid-row: span 2; }
+        .video-card:nth-child(16) { grid-column: span 3; grid-row: span 3; }
+        .video-card:nth-child(17) { grid-column: span 2; grid-row: span 3; }
+        .video-card:nth-child(18) { grid-column: span 4; grid-row: span 2; }
+        .video-card:nth-child(19) { grid-column: span 3; grid-row: span 4; }
+        .video-card:nth-child(20) { grid-column: span 2; grid-row: span 2; }
+        .video-card:nth-child(21) { grid-column: span 3; grid-row: span 3; }
+        .video-card:nth-child(22) { grid-column: span 4; grid-row: span 3; }
 
         .video-card-inner {
-            position: relative;
             width: 100%;
             height: 100%;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             background: #111;
         }
@@ -359,12 +352,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease, filter 0.4s ease;
+            transition: transform 0.4s ease;
         }
 
         .video-card:hover img {
             transform: scale(1.08);
-            filter: saturate(1.2) brightness(1.05);
         }
 
         /* Rainbow border on hover */
@@ -374,7 +366,7 @@
             inset: -3px;
             background: linear-gradient(45deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan), var(--funk-purple), var(--funk-pink));
             background-size: 300% 300%;
-            border-radius: 19px;
+            border-radius: 15px;
             opacity: 0;
             z-index: -1;
             transition: opacity 0.3s ease;
@@ -391,33 +383,23 @@
         }
 
         .video-card:hover {
-            z-index: 100;
-            transform: scale(1.12) rotate(0deg) !important;
+            transform: scale(1.08);
             box-shadow: 
-                0 25px 50px rgba(255,45,149,0.35),
-                0 10px 25px rgba(0,245,212,0.25),
-                0 0 60px rgba(155,93,229,0.15);
-            animation-play-state: paused;
-        }
-
-        /* Neighbors respond to hover */
-        .video-grid.has-hover .video-card:not(:hover) {
-            opacity: 0.6;
-            filter: blur(1px) saturate(0.7);
-            transform: scale(0.96) !important;
+                0 20px 40px rgba(255,45,149,0.3),
+                0 10px 20px rgba(0,245,212,0.2),
+                0 0 50px rgba(155,93,229,0.15);
         }
 
         .video-card .glow {
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(255,255,255,0.25) 0%, 
-                transparent 60%);
+                rgba(255,255,255,0.2) 0%, 
+                transparent 50%);
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
             z-index: 2;
-            border-radius: 16px;
         }
 
         .video-card:hover .glow {
@@ -431,14 +413,13 @@
                 105deg,
                 transparent 40%,
                 rgba(255,255,255,0.15) 45%,
-                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0.25) 50%,
                 rgba(255,255,255,0.15) 55%,
                 transparent 60%
             );
             transform: translateX(-100%);
             pointer-events: none;
             z-index: 3;
-            border-radius: 16px;
         }
 
         .video-card:hover .shimmer {
@@ -455,12 +436,11 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 2.5rem 1rem 1rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+            padding: 2rem 1rem 0.8rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
             transform: translateY(100%);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             z-index: 5;
-            border-radius: 0 0 16px 16px;
         }
 
         .video-card:hover .video-meta {
@@ -470,7 +450,7 @@
         .video-meta h3 {
             font-family: 'Righteous', cursive;
             font-size: 1rem;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
             background: linear-gradient(90deg, var(--funk-cyan), var(--funk-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -479,48 +459,59 @@
         }
 
         .video-meta .client {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: rgba(255,255,255,0.7);
             font-weight: 300;
         }
 
-        .video-card[data-tier="1"] .video-meta h3 { font-size: 1.2rem; }
-        .video-card[data-tier="2"] .video-meta h3 { font-size: 1.1rem; }
+        /* Larger cards get bigger text */
+        .video-card:nth-child(1) .video-meta h3,
+        .video-card:nth-child(4) .video-meta h3,
+        .video-card:nth-child(14) .video-meta h3,
+        .video-card:nth-child(19) .video-meta h3 { font-size: 1.3rem; }
 
-        /* Reveal animation - start hidden */
+        /* Reveal animation */
         .video-card {
             opacity: 0;
-            transform: translateY(40px) scale(0.95);
+            transform: scale(0.95);
         }
 
         .video-card.revealed {
             opacity: 1;
+            transform: scale(1);
         }
 
-        /* Re-apply the offset transforms after reveal */
-        .video-card.revealed:nth-child(4n+1) { --base-transform: translateY(0px) rotate(-0.5deg); transform: var(--base-transform); }
-        .video-card.revealed:nth-child(4n+2) { --base-transform: translateY(15px) rotate(0.5deg); transform: var(--base-transform); }
-        .video-card.revealed:nth-child(4n+3) { --base-transform: translateY(-10px) rotate(-0.3deg); transform: var(--base-transform); }
-        .video-card.revealed:nth-child(4n+4) { --base-transform: translateY(25px) rotate(0.4deg); transform: var(--base-transform); }
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .video-grid {
+                grid-template-columns: repeat(8, 1fr);
+                grid-auto-rows: 50px;
+            }
+            .video-card:nth-child(n) { grid-column: span 2; grid-row: span 3; }
+            .video-card:nth-child(3n+1) { grid-column: span 3; grid-row: span 4; }
+            .video-card:nth-child(5n+1) { grid-column: span 4; grid-row: span 3; }
+        }
 
-        @media (max-width: 600px) {
-            .video-card,
-            .video-card.revealed,
-            .video-card.revealed:nth-child(n) {
-                transform: none !important;
-                --base-transform: none;
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(4, 1fr);
+                grid-auto-rows: 45px;
+                gap: 8px;
             }
-            .video-card.revealed {
-                animation: none;
-            }
-            .video-grid.has-hover .video-card:not(:hover) {
-                opacity: 1;
-                filter: none;
-                transform: none !important;
-            }
+            .video-card:nth-child(n) { grid-column: span 2; grid-row: span 3; }
+            .video-card:nth-child(odd) { grid-column: span 2; grid-row: span 2; }
             .video-card:hover {
-                transform: scale(1.02) !important;
+                transform: scale(1.03);
             }
+        }
+
+        @media (max-width: 500px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: 40px;
+            }
+            .video-card:nth-child(n) { grid-column: span 1; grid-row: span 2; }
+            .video-card:nth-child(3n+1) { grid-column: span 2; grid-row: span 3; }
         }
 
         .video-card img {
@@ -602,16 +593,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
-            display: none;
+            background: rgba(0,0,0,0.8);
+            display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2000;
-            backdrop-filter: blur(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
         .lightbox.active {
-            display: flex;
+            opacity: 1;
+            visibility: visible;
         }
 
         .lightbox-content {
@@ -619,18 +613,12 @@
             max-width: 1200px;
             aspect-ratio: 16/9;
             position: relative;
-            animation: lightboxIn 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes lightboxIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) rotateX(10deg);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) rotateX(0);
-            }
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
         }
 
         .lightbox iframe {
@@ -758,6 +746,10 @@
             
             .scroll-indicator {
                 bottom: 3rem;
+            }
+            
+            .portfolio {
+                padding: 1rem 1rem 4rem;
             }
         }
 
@@ -1126,7 +1118,6 @@
     <script>
         // Video lightbox
         const videoCards = document.querySelectorAll('.video-card');
-        const videoGrid = document.querySelector('.video-grid');
         const lightbox = document.getElementById('lightbox');
         const videoFrame = document.getElementById('video-frame');
         const closeBtn = document.querySelector('.close-btn');
@@ -1142,8 +1133,13 @@
 
         function closeLightbox() {
             lightbox.classList.remove('active');
-            videoFrame.src = '';
             document.body.style.overflow = '';
+            // Delay removing src so fade out completes
+            setTimeout(() => {
+                if (!lightbox.classList.contains('active')) {
+                    videoFrame.src = '';
+                }
+            }, 400);
         }
 
         closeBtn.addEventListener('click', closeLightbox);
@@ -1162,12 +1158,8 @@
             link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
 
-        // Hover state - others respond
+        // Glow follows mouse on cards
         videoCards.forEach(card => {
-            card.addEventListener('mouseenter', () => videoGrid.classList.add('has-hover'));
-            card.addEventListener('mouseleave', () => videoGrid.classList.remove('has-hover'));
-            
-            // Glow follows mouse
             const glow = card.querySelector('.glow');
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
@@ -1178,23 +1170,11 @@
             });
         });
 
-        // Assign random float delays
-        videoCards.forEach((card, i) => {
-            card.style.setProperty('--float-delay', -(Math.random() * 8) + 's');
-        });
-
-        // Smooth reveal on scroll - using IntersectionObserver
+        // Smooth reveal on scroll
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Small stagger based on position in viewport
-                    const rect = entry.boundingClientRect;
-                    const delay = (rect.left / window.innerWidth) * 150 + (rect.top / window.innerHeight) * 100;
-                    
-                    setTimeout(() => {
-                        entry.target.classList.add('revealed');
-                    }, delay);
-                    
+                    entry.target.classList.add('revealed');
                     revealObserver.unobserve(entry.target);
                 }
             });
@@ -1203,7 +1183,10 @@
             rootMargin: '50px'
         });
 
-        videoCards.forEach(card => revealObserver.observe(card));
+        videoCards.forEach((card, i) => {
+            card.style.transitionDelay = (i * 0.05) + 's';
+            revealObserver.observe(card);
+        });
     </script>
 
     <!-- Structured Data for SEO -->
