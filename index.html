@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technicolour Thoughts | Video Production Portfolio</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
     <meta name="description" content="Technicolour Thoughts - Creative video production portfolio by Joel Tempero. Music videos, documentaries, and visual storytelling from Aotearoa New Zealand.">
     <meta name="keywords" content="video production, music videos, New Zealand, Joel Tempero, creative director, cinematography, Technicolour">
     <meta name="author" content="Joel Tempero">
@@ -138,19 +140,19 @@
         }
 
         .logo {
-            font-family: 'Righteous', cursive;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: logoShift 8s ease-in-out infinite;
-            background-size: 200% 200%;
+            display: flex;
+            align-items: center;
         }
 
-        @keyframes logoShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .logo img {
+            height: 45px;
+            width: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255,45,149,0.5));
         }
 
         .nav-links {
@@ -212,7 +214,9 @@
 
         .hero-title .word {
             display: block;
-            animation: titleFloat 6s ease-in-out infinite;
+            opacity: 0;
+            transform: translateY(60px) scale(0.9);
+            animation: wordReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .hero-title .word:nth-child(1) {
@@ -220,7 +224,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation-delay: 0s;
+            animation-delay: 0.2s;
         }
 
         .hero-title .word:nth-child(2) {
@@ -228,7 +232,34 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation-delay: -3s;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes wordReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.9) rotateX(-15deg);
+                filter: blur(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0deg);
+                filter: blur(0);
+            }
+        }
+
+        /* After initial reveal, add floating */
+        .hero-title .word {
+            animation: wordReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                       titleFloat 6s ease-in-out 1.5s infinite;
+        }
+
+        .hero-title .word:nth-child(1) {
+            animation-delay: 0.2s, 1.7s;
+        }
+
+        .hero-title .word:nth-child(2) {
+            animation-delay: 0.5s, 2s;
         }
 
         @keyframes titleFloat {
@@ -242,8 +273,33 @@
             font-weight: 300;
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            opacity: 0.7;
+            opacity: 0;
             margin-top: 2rem;
+            transform: translateY(20px);
+            animation: subtitleReveal 1s ease-out 1s forwards;
+        }
+
+        @keyframes subtitleReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                letter-spacing: 0.6em;
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateY(0);
+                letter-spacing: 0.3em;
+            }
+        }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            will-change: transform, opacity, left, top;
         }
 
         .scroll-indicator {
@@ -260,6 +316,12 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            opacity: 0;
+            animation: scrollIndicatorReveal 0.6s ease-out 1.5s forwards;
+        }
+
+        @keyframes scrollIndicatorReveal {
+            to { opacity: 1; }
         }
 
         .scroll-indicator:hover {
@@ -317,28 +379,16 @@
         }
 
         /* Manual grid placement - more squares, tighter packing */
-        .video-card:nth-child(1)  { grid-column: span 4; grid-row: span 3; }
-        .video-card:nth-child(2)  { grid-column: span 3; grid-row: span 3; }
-        .video-card:nth-child(3)  { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(4)  { grid-column: span 3; grid-row: span 3; }
-        .video-card:nth-child(5)  { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(6)  { grid-column: span 3; grid-row: span 2; }
-        .video-card:nth-child(7)  { grid-column: span 3; grid-row: span 3; }
-        .video-card:nth-child(8)  { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(9)  { grid-column: span 4; grid-row: span 3; }
-        .video-card:nth-child(10) { grid-column: span 3; grid-row: span 3; }
-        .video-card:nth-child(11) { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(12) { grid-column: span 3; grid-row: span 2; }
-        .video-card:nth-child(13) { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(14) { grid-column: span 4; grid-row: span 3; }
-        .video-card:nth-child(15) { grid-column: span 3; grid-row: span 3; }
-        .video-card:nth-child(16) { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(17) { grid-column: span 3; grid-row: span 2; }
-        .video-card:nth-child(18) { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(19) { grid-column: span 3; grid-row: span 3; }
-        .video-card:nth-child(20) { grid-column: span 4; grid-row: span 3; }
-        .video-card:nth-child(21) { grid-column: span 2; grid-row: span 2; }
-        .video-card:nth-child(22) { grid-column: span 3; grid-row: span 2; }
+        /* Tier 1 = Large (4x3), Tier 2 = Medium (3x3), Tier 3 = Small-Med (3x2), Tier 4 = Small (2x2) */
+        .video-card[data-tier="1"] { grid-column: span 4; grid-row: span 3; }
+        .video-card[data-tier="2"] { grid-column: span 3; grid-row: span 3; }
+        .video-card[data-tier="3"] { grid-column: span 3; grid-row: span 2; }
+        .video-card[data-tier="4"] { grid-column: span 2; grid-row: span 2; }
+        
+        /* Some variety to break up the pattern */
+        .video-card[data-tier="1"]:nth-child(4n) { grid-column: span 3; grid-row: span 4; }
+        .video-card[data-tier="2"]:nth-child(3n) { grid-column: span 4; grid-row: span 2; }
+        .video-card[data-tier="3"]:nth-child(5n) { grid-column: span 2; grid-row: span 3; }
 
         .video-card-inner {
             width: 100%;
@@ -494,12 +544,21 @@
         /* Reveal animation */
         .video-card {
             opacity: 0;
-            transform: scale(0.95);
+            transform: translateY(30px) scale(0.97);
+            transition: 
+                opacity 0.6s ease,
+                transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s ease,
+                z-index 0s 0.4s;
         }
 
         .video-card.revealed {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0) scale(1);
+        }
+
+        .video-card.revealed:hover {
+            transform: scale(1.08);
         }
 
         /* Responsive */
@@ -832,7 +891,9 @@
     <div class="floating-shape shape-3"></div>
 
     <nav>
-        <a href="index.html" class="logo">Technicolour Thoughts</a>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Technicolour Thoughts">
+        </a>
         <button class="nav-toggle" aria-label="Toggle navigation">
             <span></span>
             <span></span>
@@ -857,202 +918,236 @@
 
     <main class="portfolio" id="portfolio">
         <div class="video-grid">
-            <article class="video-card" data-video-id="y8U5uT1ktO8" data-tier="1" style="--float-delay: 0s; --float-duration: 6s;">
+            <article class="video-card" data-video-url="https://vimeo.com/1132286636?fl=pl&fe=vl" data-tier="2">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/y8U5uT1ktO8/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://vumbnail.com/1132286636.jpg" alt="2025 Campaign" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Dreamscape</h3><span class="client">Made for Aurora Creative</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>2025 Campaign</h3><span class="client">Villa Maria</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="ePZktG9y50w" data-tier="3" style="--float-delay: 0.3s; --float-duration: 7s;">
+            <article class="video-card" data-video-url="https://youtu.be/K8iWSDupx0k" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/ePZktG9y50w/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/K8iWSDupx0k/maxresdefault.jpg" alt="In The Grange" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Neon Nights</h3><span class="client">Made for Velvet Sound</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>In The Grange</h3><span class="client">Middleton Grange School</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="fBuhFUE_bjI" data-tier="2" style="--float-delay: 0.6s; --float-duration: 5.5s;">
+            <article class="video-card" data-video-url="https://youtu.be/tTyX2gCskzM" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/fBuhFUE_bjI/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/tTyX2gCskzM/maxresdefault.jpg" alt="Competition Launch 2025" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Electric Soul</h3><span class="client">Made for Midnight Records</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Competition Launch 2025</h3><span class="client">48Hours</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="7OnzoBmHjs0" data-tier="4" style="--float-delay: 0.9s; --float-duration: 6.5s;">
+            <article class="video-card" data-video-url="https://youtu.be/RQ2doHGXVPs" data-tier="2">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/7OnzoBmHjs0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/RQ2doHGXVPs/maxresdefault.jpg" alt="Chch Highlights 2025" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Pulse</h3><span class="client">Made for Echo Collective</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Chch Highlights 2025</h3><span class="client">48Hours</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="LS6JOx-M6ho" data-tier="2" style="--float-delay: 0.2s; --float-duration: 5.8s;">
+            <article class="video-card" data-video-url="https://youtu.be/nWYrPgQrao0" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/LS6JOx-M6ho/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/nWYrPgQrao0/maxresdefault.jpg" alt="The Good News Project 2025" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Chromatic</h3><span class="client">Made for Prism Studios</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>The Good News Project 2025</h3><span class="client">A Rocha Aotearoa</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="IKUMRVsxjIQ" data-tier="4" style="--float-delay: 0.5s; --float-duration: 7.2s;">
+            <article class="video-card" data-video-url="https://youtu.be/sNf9LIyXw4s" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/IKUMRVsxjIQ/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/sNf9LIyXw4s/maxresdefault.jpg" alt="Mary Poppins Documentary" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Wavelength</h3><span class="client">Made for Nova Music</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Mary Poppins Documentary</h3><span class="client">The Grange Theatre</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="YJltaGOJ3c0" data-tier="1" style="--float-delay: 0.8s; --float-duration: 6.2s;">
+            <article class="video-card" data-video-url="https://vimeo.com/1077797233?fl=pl&fe=vl" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/YJltaGOJ3c0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://vumbnail.com/1077797233.jpg" alt="Animation Demo" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Kaleidoscope</h3><span class="client">Made for Spectrum Arts</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Animation Demo</h3><span class="client">Editfest 2025</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="OOtdVa7SBho" data-tier="3" style="--float-delay: 0.1s; --float-duration: 5.6s;">
+            <article class="video-card" data-video-url="https://youtu.be/tanyD_yF5_s" data-tier="2">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/OOtdVa7SBho/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/tanyD_yF5_s/maxresdefault.jpg" alt="What if everyone got a chair?" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Afterglow</h3><span class="client">Made for Dusk Agency</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>What if everyone got a chair?</h3><span class="client">Animation Demo</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="hYpIq16QDEA" data-tier="4" style="--float-delay: 0.4s; --float-duration: 6.8s;">
+            <article class="video-card" data-video-url="https://www.youtube.com/watch?v=9ue-p2xbjZE" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/hYpIq16QDEA/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/9ue-p2xbjZE/maxresdefault.jpg" alt="Human, Just Like Me" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Flux</h3><span class="client">Made for Kinetic Films</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Human, Just Like Me</h3><span class="client">Kath Bee</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="-KHRiFtIqNs" data-tier="3" style="--float-delay: 0.7s; --float-duration: 5.4s;">
+            <article class="video-card" data-video-url="y8U5uT1ktO8" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/-KHRiFtIqNs/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/y8U5uT1ktO8/maxresdefault.jpg" alt="Formal 2025" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Vapor</h3><span class="client">Made for Haze Productions</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Formal 2025</h3><span class="client">Middleton Grange School</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="q9Cb0MG0s7k" data-tier="2" style="--float-delay: 0.25s; --float-duration: 7.1s;">
+            <article class="video-card" data-video-url="ePZktG9y50w" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/q9Cb0MG0s7k/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/ePZktG9y50w/maxresdefault.jpg" alt="Elmer's Elephant Trail" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Mirage</h3><span class="client">Made for Desert Rose</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Elmer's Elephant Trail</h3><span class="client">Laura Fergusson Brain Injury Trust</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="7yoKTI2Q8D0" data-tier="4" style="--float-delay: 0.55s; --float-duration: 6.3s;">
+            <article class="video-card" data-video-url="fBuhFUE_bjI" data-tier="2">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/7yoKTI2Q8D0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/fBuhFUE_bjI/maxresdefault.jpg" alt="Another Day of Sun" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Synthesis</h3><span class="client">Made for Circuit Labs</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Another Day of Sun</h3><span class="client">Middleton Grange School</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="x9uRYIQ0nIQ" data-tier="3" style="--float-delay: 0.85s; --float-duration: 5.9s;">
+            <article class="video-card" data-video-url="7OnzoBmHjs0" data-tier="2">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/x9uRYIQ0nIQ/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/7OnzoBmHjs0/maxresdefault.jpg" alt="Endgame Credits Parody" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Radiant</h3><span class="client">Made for Lumina Co</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Endgame Credits Parody</h3><span class="client">Middleton Grange School</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="XLI_AlqjS1Q" data-tier="1" style="--float-delay: 0.15s; --float-duration: 6.6s;">
+            <article class="video-card" data-video-url="LS6JOx-M6ho" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/XLI_AlqjS1Q/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/LS6JOx-M6ho/maxresdefault.jpg" alt="My Favourite Photo of My Wife" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Ethereal</h3><span class="client">Made for Cloud Nine</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>My Favourite Photo of My Wife</h3><span class="client">Monologue</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="K8lBJQwctVE" data-tier="4" style="--float-delay: 0.45s; --float-duration: 5.7s;">
+            <article class="video-card" data-video-url="IKUMRVsxjIQ" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/K8lBJQwctVE/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/IKUMRVsxjIQ/maxresdefault.jpg" alt="I Made A Video Game About My Brother" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Prism</h3><span class="client">Made for Refract Studio</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>I Made A Video Game About My Brother</h3><span class="client">Documentary</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="RbYVRD8rCWs" data-tier="2" style="--float-delay: 0.75s; --float-duration: 7.3s;">
+            <article class="video-card" data-video-url="YJltaGOJ3c0" data-tier="4">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/RbYVRD8rCWs/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/YJltaGOJ3c0/maxresdefault.jpg" alt="I Can Do It! Music Video" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Aurora</h3><span class="client">Made for Northern Lights</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>I Can Do It! Music Video</h3><span class="client">Suzie Cato & Kath Bee</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="kQZbWIhQPxE" data-tier="3" style="--float-delay: 0.35s; --float-duration: 6.1s;">
+            <article class="video-card" data-video-url="OOtdVa7SBho" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/kQZbWIhQPxE/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/OOtdVa7SBho/maxresdefault.jpg" alt="2025 Music Video" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Cascade</h3><span class="client">Made for Waterfall Media</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>2025 Music Video</h3><span class="client">Eastercamp</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="zy6gXw9sXZU" data-tier="4" style="--float-delay: 0.65s; --float-duration: 5.5s;">
+            <article class="video-card" data-video-url="hYpIq16QDEA" data-tier="4">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/zy6gXw9sXZU/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/hYpIq16QDEA/maxresdefault.jpg" alt="Crab Mentality" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Static</h3><span class="client">Made for Signal House</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Crab Mentality</h3><span class="client">E Tu Tangata</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="T-nWM5n1xqU" data-tier="2" style="--float-delay: 0.95s; --float-duration: 6.9s;">
+            <article class="video-card" data-video-url="-KHRiFtIqNs" data-tier="4">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/T-nWM5n1xqU/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/-KHRiFtIqNs/maxresdefault.jpg" alt="I Remember" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Horizon</h3><span class="client">Made for Skyline Agency</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>I Remember</h3><span class="client">Kath Bee</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="FwzAs19FxV0" data-tier="4" style="--float-delay: 0.2s; --float-duration: 7.4s;">
+            <article class="video-card" data-video-url="q9Cb0MG0s7k" data-tier="4">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/FwzAs19FxV0/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/q9Cb0MG0s7k/maxresdefault.jpg" alt="Explainer Animation" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Ember</h3><span class="client">Made for Firefly Films</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Explainer Animation</h3><span class="client">Upstream</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="s4LxMVv6Xg4" data-tier="3" style="--float-delay: 0.5s; --float-duration: 5.3s;">
+            <article class="video-card" data-video-url="7yoKTI2Q8D0" data-tier="2">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/s4LxMVv6Xg4/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/7yoKTI2Q8D0/maxresdefault.jpg" alt="Lyric Video Animation" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Spectrum</h3><span class="client">Made for RGB Collective</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Lyric Video Animation</h3><span class="client">E Tu Tangata</span></div></div>
                 </div>
             </article>
-            <article class="video-card" data-video-id="JOSVa1-2ehM" data-tier="1" style="--float-delay: 0.8s; --float-duration: 6.4s;">
+            <article class="video-card" data-video-url="x9uRYIQ0nIQ" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/JOSVa1-2ehM/maxresdefault.jpg" alt="Video thumbnail" loading="lazy">
+                    <img src="https://img.youtube.com/vi/x9uRYIQ0nIQ/maxresdefault.jpg" alt="Saturday Highlights" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
-                    <div class="play-btn"></div>
-                    <div class="video-meta"><div class="video-meta-text"><h3>Vivid</h3><span class="client">Made for Chroma Works</span></div></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Saturday Highlights</h3><span class="client">Eastercamp</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="XLI_AlqjS1Q" data-tier="3">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/XLI_AlqjS1Q/maxresdefault.jpg" alt="Formal 2024" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Formal 2024</h3><span class="client">Middleton Grange School</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="K8lBJQwctVE" data-tier="4">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/K8lBJQwctVE/maxresdefault.jpg" alt="Athletics 2024" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Athletics 2024</h3><span class="client">Middleton Grange School</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="RbYVRD8rCWs" data-tier="1">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/RbYVRD8rCWs/maxresdefault.jpg" alt="EPIC Musical Medley" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>EPIC Musical Medley</h3><span class="client">Middleton Grange School</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="kQZbWIhQPxE" data-tier="3">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/kQZbWIhQPxE/maxresdefault.jpg" alt="Sea Sounds 2025" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Sea Sounds 2025</h3><span class="client">Sea Sounds</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="T-nWM5n1xqU" data-tier="4">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/T-nWM5n1xqU/maxresdefault.jpg" alt="Friday Highlights" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Friday Highlights</h3><span class="client">Eastercamp</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="s4LxMVv6Xg4" data-tier="1">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/s4LxMVv6Xg4/maxresdefault.jpg" alt="pix.ar" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>pix.ar</h3><span class="client">demo animation</span></div></div>
+                </div>
+            </article>
+            <article class="video-card" data-video-url="JOSVa1-2ehM" data-tier="2">
+                <div class="video-card-inner">
+                    <img src="https://img.youtube.com/vi/JOSVa1-2ehM/maxresdefault.jpg" alt="Chasing Ghosts" loading="lazy">
+                    <div class="glow"></div>
+                    <div class="shimmer"></div>
+                    <div class="video-meta"><div class="video-meta-text"><h3>Chasing Ghosts</h3><span class="client">Flynn Adamson</span></div></div>
                 </div>
             </article>
         </div>
@@ -1071,6 +1166,24 @@
     </footer>
 
     <script>
+        // Shuffle cards on page load
+        function shuffleCards() {
+            const grid = document.querySelector('.video-grid');
+            const cards = Array.from(grid.children);
+            
+            // Fisher-Yates shuffle
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            
+            // Re-append in shuffled order
+            cards.forEach(card => grid.appendChild(card));
+        }
+        
+        // Run shuffle immediately
+        shuffleCards();
+
         // Video lightbox
         const videoCards = document.querySelectorAll('.video-card');
         const lightbox = document.getElementById('lightbox');
@@ -1079,17 +1192,35 @@
 
         videoCards.forEach(card => {
             card.addEventListener('click', () => {
-                const videoId = card.dataset.videoId;
-                videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                const videoUrl = card.dataset.videoUrl;
+                let embedUrl = '';
+                
+                // Handle different video URL formats
+                if (videoUrl.includes('vimeo.com')) {
+                    const vimeoId = videoUrl.match(/vimeo\.com\/(\d+)/)?.[1];
+                    if (vimeoId) embedUrl = `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+                } else if (videoUrl.includes('youtu.be')) {
+                    const ytId = videoUrl.match(/youtu\.be\/([^?]+)/)?.[1];
+                    if (ytId) embedUrl = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+                } else if (videoUrl.includes('youtube.com/watch')) {
+                    const ytId = videoUrl.match(/[?&]v=([^&]+)/)?.[1];
+                    if (ytId) embedUrl = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+                } else if (videoUrl.length === 11) {
+                    // Raw YouTube ID
+                    embedUrl = `https://www.youtube.com/embed/${videoUrl}?autoplay=1&rel=0`;
+                }
+                
+                if (embedUrl) {
+                    videoFrame.src = embedUrl;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
             });
         });
 
         function closeLightbox() {
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
-            // Delay removing src so fade out completes
             setTimeout(() => {
                 if (!lightbox.classList.contains('active')) {
                     videoFrame.src = '';
@@ -1116,31 +1247,101 @@
         // Glow follows mouse on cards
         videoCards.forEach(card => {
             const glow = card.querySelector('.glow');
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                glow.style.setProperty('--mouse-x', x + '%');
-                glow.style.setProperty('--mouse-y', y + '%');
-            });
+            if (glow) {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    glow.style.setProperty('--mouse-x', x + '%');
+                    glow.style.setProperty('--mouse-y', y + '%');
+                });
+            }
         });
 
-        // Smooth reveal on scroll
+        // Smooth reveal on scroll with stagger
         const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
+                    // Add staggered delay based on entry order
+                    const delay = index * 80;
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, delay);
                     revealObserver.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.1,
-            rootMargin: '50px'
+            threshold: 0.05,
+            rootMargin: '20px'
         });
 
-        videoCards.forEach((card, i) => {
-            card.style.transitionDelay = (i * 0.05) + 's';
+        videoCards.forEach(card => {
             revealObserver.observe(card);
+        });
+
+        // SPARKLER EFFECT
+        const sparkleColors = ['#ff2d95', '#ff6b35', '#ffd23f', '#00f5d4', '#9b5de5'];
+        
+        document.addEventListener('mousemove', (e) => {
+            const particleCount = 3;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'sparkle';
+                
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                const size = Math.random() * 8 + 4;
+                const vx = (Math.random() - 0.5) * 100;
+                const vy = (Math.random() - 0.5) * 100 - 50;
+                const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                const lifetime = Math.random() * 600 + 400;
+                
+                particle.style.cssText = `
+                    position: fixed;
+                    left: ${e.clientX + offsetX}px;
+                    top: ${e.clientY + offsetY}px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    box-shadow: 0 0 ${size}px ${color}, 0 0 ${size * 2}px ${color};
+                    mix-blend-mode: screen;
+                `;
+                
+                document.body.appendChild(particle);
+                
+                const startTime = performance.now();
+                const startX = e.clientX + offsetX;
+                const startY = e.clientY + offsetY;
+                
+                function animateParticle(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = elapsed / lifetime;
+                    
+                    if (progress >= 1) {
+                        particle.remove();
+                        return;
+                    }
+                    
+                    const gravity = 50;
+                    const x = startX + vx * progress;
+                    const y = startY + vy * progress + gravity * progress * progress;
+                    const opacity = 1 - progress;
+                    const scale = 1 - progress * 0.5;
+                    
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    particle.style.opacity = opacity;
+                    particle.style.transform = `scale(${scale})`;
+                    
+                    requestAnimationFrame(animateParticle);
+                }
+                
+                requestAnimationFrame(animateParticle);
+            }
         });
     </script>
 

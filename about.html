@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Technicolour Thoughts</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
     <meta name="description" content="About Technicolour Thoughts - Learn more about the creative vision and the person behind the lens. Video production by Joel Tempero.">
     <meta name="keywords" content="video production, about, Joel Tempero, creative director, cinematography, New Zealand filmmaker">
     <meta name="author" content="Joel Tempero">
@@ -69,8 +71,9 @@
         .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 3px); opacity: 0.3; }
 
         nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: linear-gradient(to bottom, rgba(10,10,15,0.95) 0%, transparent 100%); }
-        .logo { font-family: 'Righteous', cursive; font-size: 1.5rem; background: linear-gradient(135deg, var(--funk-pink), var(--funk-yellow), var(--funk-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: logoShift 8s ease-in-out infinite; background-size: 200% 200%; text-decoration: none; }
-        @keyframes logoShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 45px; width: auto; transition: transform 0.3s ease, filter 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); filter: drop-shadow(0 0 10px rgba(255,45,149,0.5)); }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { color: #fff; text-decoration: none; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem; position: relative; padding: 0.5rem 0; transition: color 0.3s; }
         .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--funk-pink), var(--funk-cyan)); transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
@@ -147,7 +150,14 @@
             .cta-buttons { flex-direction: column; align-items: center; }
             .mega-btn { width: 100%; max-width: 300px; }
         }
-        .trail { position: fixed; width: 20px; height: 20px; border-radius: 50%; pointer-events: none; z-index: 9999; mix-blend-mode: screen; transition: transform 0.1s, opacity 0.3s; }
+        .sparkle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            will-change: transform, opacity, left, top;
+        }
     </style>
 </head>
 <body>
@@ -164,7 +174,7 @@
     <div class="geo-shape geo-5"></div>
 
     <nav>
-        <a href="index.html" class="logo">Technicolour Thoughts</a>
+        <a href="index.html" class="logo"><img src="logo.png" alt="Technicolour Thoughts"></a>
         <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
         <ul class="nav-links">
             <li><a href="index.html">Portfolio</a></li>
@@ -181,20 +191,17 @@
             <div class="morph-card">
                 <span class="card-icon">✦</span>
                 <h2>The Vision</h2>
-                <p>Technicolour Thoughts is where ideas burst into vivid life. Every frame is a canvas, every edit a brushstroke, painting stories that resonate and move.</p>
-                <p>We believe in the power of visual storytelling to transform, inspire, and connect. From music videos that pulse with energy to documentaries that dig deep into the human experience.</p>
+                <p>Technicolour Thoughts is where ideas burst into vivid life. Every frame is a canvas, every edit a brushstroke. We're painting stories that resonate and move - and we're having a blast doing so!</p><p>We believe in the power of visual storytelling to transform, inspire, and connect. From music videos that pulse with energy to documentaries that dig deep into the human experience.</p>
             </div>
             <div class="morph-card">
                 <span class="card-icon">◈</span>
                 <h2>The Craft</h2>
-                <p>Based in Aotearoa New Zealand, we bring a unique perspective to every project. Blending technical excellence with creative intuition, we craft visuals that don't just capture attention—they hold it.</p>
-                <p>Whether it's a bold music video, a heartfelt documentary, or something entirely new, we approach each project with fresh eyes and an open mind.</p>
+                <p>Based in Aotearoa New Zealand, we bring a unique perspective to every project. Blending technical excellence with clever ideas.</p><p>Whether it's a bold music video, a heartfelt documentary, or something entirely new, we approach each project with fresh eyes and an open mind. Story is king! and all the other magic falls into place just how we want it to.</p>
             </div>
             <div class="morph-card">
                 <span class="card-icon">◎</span>
                 <h2>The Person</h2>
-                <p>Produced by Joel Tempero—a creative who sees the world a little differently. With a passion for colour, movement, and emotion, Joel transforms concepts into compelling visual narratives.</p>
-                <p>Every project is an adventure. Every frame tells a story. Let's create something unforgettable.</p>
+                <p>Produced by digital entrepreneur, Joel Tempero, a creative who sees the world a little differently (and sometimes, a lot differently). With a passion for colour, movement, and emotion, Joel transforms simple ideas into compelling, engaging masterpieces!</p><p>Every project is an adventure. Every frame tells a story. Let's create something unforgettable.</p>
             </div>
         </div>
 
@@ -247,18 +254,81 @@
         cards.forEach((card, index) => { card.style.opacity = '0'; card.style.transform = 'translateY(50px)'; card.style.transition = 'opacity 0.8s ease ' + (index * 0.2) + 's, transform 0.8s ease ' + (index * 0.2) + 's'; observer.observe(card); });
 
         const colors = ['#ff2d95', '#ff6b35', '#ffd23f', '#00f5d4', '#9b5de5'];
-        let trailIndex = 0;
+        
+        // Sparkler effect - many dynamic particles
         document.addEventListener('mousemove', (e) => {
-            if (Math.random() > 0.92) {
-                const trail = document.createElement('div');
-                trail.className = 'trail';
-                trail.style.left = (e.clientX - 10) + 'px';
-                trail.style.top = (e.clientY - 10) + 'px';
-                trail.style.background = colors[trailIndex % colors.length];
-                document.body.appendChild(trail);
-                trailIndex++;
-                setTimeout(() => { trail.style.transform = 'scale(0)'; trail.style.opacity = '0'; }, 100);
-                setTimeout(() => trail.remove(), 500);
+            // Create multiple particles per mouse move
+            const particleCount = 3;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'sparkle';
+                
+                // Random offset from cursor
+                const offsetX = (Math.random() - 0.5) * 20;
+                const offsetY = (Math.random() - 0.5) * 20;
+                
+                // Random size
+                const size = Math.random() * 8 + 4;
+                
+                // Random velocity for movement
+                const vx = (Math.random() - 0.5) * 100;
+                const vy = (Math.random() - 0.5) * 100 - 50; // Slight upward bias
+                
+                // Random color
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random lifetime
+                const lifetime = Math.random() * 600 + 400;
+                
+                particle.style.cssText = `
+                    position: fixed;
+                    left: ${e.clientX + offsetX}px;
+                    top: ${e.clientY + offsetY}px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    box-shadow: 0 0 ${size}px ${color}, 0 0 ${size * 2}px ${color};
+                    mix-blend-mode: screen;
+                `;
+                
+                document.body.appendChild(particle);
+                
+                // Animate the particle
+                const startTime = performance.now();
+                const startX = e.clientX + offsetX;
+                const startY = e.clientY + offsetY;
+                
+                function animateParticle(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = elapsed / lifetime;
+                    
+                    if (progress >= 1) {
+                        particle.remove();
+                        return;
+                    }
+                    
+                    // Physics: gravity and drift
+                    const gravity = 50;
+                    const x = startX + vx * progress;
+                    const y = startY + vy * progress + gravity * progress * progress;
+                    
+                    // Fade and shrink
+                    const opacity = 1 - progress;
+                    const scale = 1 - progress * 0.5;
+                    
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    particle.style.opacity = opacity;
+                    particle.style.transform = `scale(${scale})`;
+                    
+                    requestAnimationFrame(animateParticle);
+                }
+                
+                requestAnimationFrame(animateParticle);
             }
         });
     </script>
