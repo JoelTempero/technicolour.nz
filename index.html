@@ -378,17 +378,17 @@
                 z-index 0s 0s;
         }
 
-        /* Manual grid placement - more squares, tighter packing */
-        /* Tier 1 = Large (4x3), Tier 2 = Medium (3x3), Tier 3 = Small-Med (3x2), Tier 4 = Small (2x2) */
-        .video-card[data-tier="1"] { grid-column: span 4; grid-row: span 3; }
-        .video-card[data-tier="2"] { grid-column: span 3; grid-row: span 3; }
-        .video-card[data-tier="3"] { grid-column: span 3; grid-row: span 2; }
+        /* Manual grid placement - balanced proportions, less extreme widths */
+        /* Tier 1 = Large (3x3), Tier 2 = Medium (3x2 or 2x3), Tier 3 = Small-Med (2x2), Tier 4 = Small (2x2) */
+        .video-card[data-tier="1"] { grid-column: span 3; grid-row: span 3; }
+        .video-card[data-tier="2"] { grid-column: span 3; grid-row: span 2; }
+        .video-card[data-tier="3"] { grid-column: span 2; grid-row: span 2; }
         .video-card[data-tier="4"] { grid-column: span 2; grid-row: span 2; }
         
-        /* Some variety to break up the pattern */
-        .video-card[data-tier="1"]:nth-child(4n) { grid-column: span 3; grid-row: span 4; }
-        .video-card[data-tier="2"]:nth-child(3n) { grid-column: span 4; grid-row: span 2; }
-        .video-card[data-tier="3"]:nth-child(5n) { grid-column: span 2; grid-row: span 3; }
+        /* Add variety without going too wide */
+        .video-card[data-tier="1"]:nth-child(3n) { grid-column: span 4; grid-row: span 3; }
+        .video-card[data-tier="2"]:nth-child(4n) { grid-column: span 2; grid-row: span 3; }
+        .video-card[data-tier="3"]:nth-child(5n) { grid-column: span 3; grid-row: span 2; }
 
         .video-card-inner {
             width: 100%;
