@@ -952,7 +952,7 @@
             </article>
             <article class="video-card" data-video-url="https://youtu.be/nWYrPgQrao0" data-tier="3">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/nWYrPgQrao0/maxresdefault.jpg" alt="The Good News Project 2025" loading="lazy">
+                    <img src="thumbnails/good-news-project.jpg" alt="The Good News Project 2025" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="video-meta"><div class="video-meta-text"><h3>The Good News Project 2025</h3><span class="client">A Rocha Aotearoa</span></div></div>
@@ -960,7 +960,7 @@
             </article>
             <article class="video-card" data-video-url="https://youtu.be/sNf9LIyXw4s" data-tier="1">
                 <div class="video-card-inner">
-                    <img src="https://img.youtube.com/vi/sNf9LIyXw4s/maxresdefault.jpg" alt="Mary Poppins Documentary" loading="lazy">
+                    <img src="thumbnails/mary-poppins.jpg" alt="Mary Poppins Documentary" loading="lazy">
                     <div class="glow"></div>
                     <div class="shimmer"></div>
                     <div class="video-meta"><div class="video-meta-text"><h3>Mary Poppins Documentary</h3><span class="client">The Grange Theatre</span></div></div>
@@ -1279,18 +1279,48 @@
             revealObserver.observe(card);
         });
 
-        // Handle failed YouTube thumbnails - fallback to lower res
+        // Handle failed thumbnails - fallback for YouTube and Vimeo
         document.querySelectorAll('.video-card img').forEach(img => {
             img.addEventListener('error', function() {
                 const src = this.src;
-                if (src.includes('maxresdefault')) {
-                    // Try hqdefault (480px) instead
-                    this.src = src.replace('maxresdefault', 'hqdefault');
-                } else if (src.includes('hqdefault')) {
-                    // Try mqdefault (320px) as last resort
-                    this.src = src.replace('hqdefault', 'mqdefault');
+                
+                // YouTube fallbacks
+                if (src.includes('youtube.com') || src.includes('ytimg')) {
+                    if (src.includes('maxresdefault')) {
+                        this.src = src.replace('maxresdefault', 'hqdefault');
+                    } else if (src.includes('hqdefault')) {
+                        this.src = src.replace('hqdefault', 'mqdefault');
+                    }
+                }
+                
+                // Vimeo fallback - use a gradient placeholder
+                if (src.includes('vumbnail') || src.includes('vimeo')) {
+                    this.style.display = 'none';
+                    this.parentElement.style.background = 'linear-gradient(135deg, var(--funk-pink), var(--funk-purple), var(--funk-cyan))';
                 }
             });
+            
+            // For Vimeo, fetch proper thumbnail via oEmbed
+            const card = img.closest('.video-card');
+            const videoUrl = card?.dataset.videoUrl;
+            if (videoUrl && videoUrl.includes('vimeo.com')) {
+                const vimeoId = videoUrl.match(/vimeo\.com\/(\d+)/)?.[1];
+                if (vimeoId) {
+                    fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.thumbnail_url) {
+                                // Get higher res version
+                                img.src = data.thumbnail_url.replace(/_\d+x\d+/, '_640x360');
+                            }
+                        })
+                        .catch(() => {
+                            // Fallback to gradient on error
+                            img.style.display = 'none';
+                            img.parentElement.style.background = 'linear-gradient(135deg, var(--funk-pink), var(--funk-purple), var(--funk-cyan))';
+                        });
+                }
+            }
         });
 
         // SPARKLER EFFECT
