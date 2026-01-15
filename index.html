@@ -1279,6 +1279,20 @@
             revealObserver.observe(card);
         });
 
+        // Handle failed YouTube thumbnails - fallback to lower res
+        document.querySelectorAll('.video-card img').forEach(img => {
+            img.addEventListener('error', function() {
+                const src = this.src;
+                if (src.includes('maxresdefault')) {
+                    // Try hqdefault (480px) instead
+                    this.src = src.replace('maxresdefault', 'hqdefault');
+                } else if (src.includes('hqdefault')) {
+                    // Try mqdefault (320px) as last resort
+                    this.src = src.replace('hqdefault', 'mqdefault');
+                }
+            });
+        });
+
         // SPARKLER EFFECT
         const sparkleColors = ['#ff2d95', '#ff6b35', '#ffd23f', '#00f5d4', '#9b5de5'];
         
